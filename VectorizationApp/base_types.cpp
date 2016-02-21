@@ -8,7 +8,13 @@
 
 APP_BEGIN_NAMESPACE
 
-WPoint::WPoint(void)
+WPoint::WPoint() :
+  m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
+{
+}
+
+WPoint::WPoint(WColor color) : 
+  m_color(color), m_isInitialized(true)
 {
 }
 

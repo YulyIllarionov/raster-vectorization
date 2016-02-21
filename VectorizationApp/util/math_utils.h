@@ -8,7 +8,7 @@
 #define _VECTORIZATION_APP_MATH_UTILS_H_
 #pragma once
 
-#include "app\app_const.h"
+#include "..\app\app_const.h"
 
 APP_BEGIN_NAMESPACE
 
