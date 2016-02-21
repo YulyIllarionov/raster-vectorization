@@ -13,21 +13,35 @@
 
 APP_BEGIN_NAMESPACE
 
-class WPoint;
+class WPixel;
 
-typedef std::vector<WPoint>                WPointsContainer;
-typedef std::vector<std::vector<WPoint> >  WMatrix;
+typedef std::vector<WPixel>                WPixelsContainer;
+typedef std::vector<std::vector<WPixel> >  WMatrix;
 typedef unsigned char                      WColor;
 
 class WPoint
 {
 public:
-  WPoint();
-  WPoint(WColor color);
-  virtual ~WPoint();
+	WPoint();
+	WPoint(int x_, int y_);
+	virtual ~WPoint(); 
 
-  // return Empty WPoint
-  static WPoint Empty() { return WPoint(); };
+	WPoint& operator=(const WPoint& other);
+
+	int x;
+	int y;
+};
+
+class WPixel : public WPoint
+{
+public:
+
+  WPixel();
+  WPixel(WColor color, int x_ = -1, int y_ = -1);
+  virtual ~WPixel();
+
+  // return Empty WPixel
+  static WPixel Empty() { return WPixel(); };
   // check if point is empty
   bool IsEmpty() { return m_isInitialized; };
 
@@ -35,7 +49,6 @@ private:
 
   bool m_isInitialized;
   WColor m_color;
-
 };
 
 class WLine
@@ -49,14 +62,16 @@ public:
   double get_Width();
 
   // points
-  void AddPoint(const WPoint& point) { m_points.push_back(point); };
-  WPoint get_Point(int idx) { return m_points.size() > idx ? m_points[idx] : WPoint::Empty(); };
+  void AddPoint(const WPixel& point) { m_points.push_back(point); };
+  bool AddPointAt(const WPixel& point, int idx);
+  WPixel get_Point(int idx) { return m_points.size() > idx ? m_points[idx] : WPixel::Empty(); };
   bool RemovePoint(int idx);
+  int Lenght(){ return m_points.size(); }; 
 
 
 private:
   double            m_width;
-  WPointsContainer  m_points;
+  WPixelsContainer  m_points;
 };
 
 
