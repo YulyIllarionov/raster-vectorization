@@ -1,27 +1,27 @@
 ========================================================================
-    CONSOLE APPLICATION : rasterVectorization Project Overview
+    CONSOLE APPLICATION : VectorizationApp Project Overview
 ========================================================================
 
-AppWizard has created this rasterVectorization application for you.
+AppWizard has created this VectorizationApp application for you.
 
 This file contains a summary of what you will find in each of the files that
-make up your rasterVectorization application.
+make up your VectorizationApp application.
 
 
-rasterVectorization.vcxproj
+VectorizationApp.vcxproj
     This is the main project file for VC++ projects generated using an Application Wizard.
     It contains information about the version of Visual C++ that generated the file, and
     information about the platforms, configurations, and project features selected with the
     Application Wizard.
 
-rasterVectorization.vcxproj.filters
+VectorizationApp.vcxproj.filters
     This is the filters file for VC++ projects generated using an Application Wizard. 
     It contains information about the association between the files in your project 
     and the filters. This association is used in the IDE to show grouping of files with
     similar extensions under a specific node (for e.g. ".cpp" files are associated with the
     "Source Files" filter).
 
-rasterVectorization.cpp
+VectorizationApp.cpp
     This is the main application source file.
 
 /////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named rasterVectorization.pch and a precompiled types file named StdAfx.obj.
+    named VectorizationApp.pch and a precompiled types file named StdAfx.obj.
 
 /////////////////////////////////////////////////////////////////////////////
 Other notes:
