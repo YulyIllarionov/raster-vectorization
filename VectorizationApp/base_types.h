@@ -32,7 +32,7 @@ public:
 	int y;
 };
 
-class WPixel : public WPoint
+class WPixel
 {
 public:
 

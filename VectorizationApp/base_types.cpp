@@ -34,12 +34,12 @@ WPixel::~WPixel(void)
 }
 
 WPixel::WPixel() :
-WPoint(), m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
+m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
 {
 }
 
 WPixel::WPixel(WColor color, int x_ = -1, int y_ = -1) :
-WPoint(x_,y_), m_isInitialized(true)
+m_isInitialized(true)
 {
 
 }
