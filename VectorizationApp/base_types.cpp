@@ -62,4 +62,10 @@ bool WLine::AddPointAt(const WPixel& point, int idx)
 	return true;
 } 
 
+void WLine::setWidth(double width)
+{
+	m_width = width;
+}
+
+
 APP_END_NAMESPACE

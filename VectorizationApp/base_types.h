@@ -58,8 +58,8 @@ public:
   virtual ~WLine();
 
   // line width
-  void set_Width();
-  double get_Width();
+  void setWidth(double width);
+  double getWidth() {return m_width; };
 
   // points
   void AddPoint(const WPixel& point) { m_points.push_back(point); };
