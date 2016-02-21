@@ -12,7 +12,14 @@
 
 APP_BEGIN_NAMESPACE
 
+class MathUtils
+{
+  // return maximum of two values
+  template<typename T> static T Max(T val1, T val2);
+  // return minimum of two values
+  template<typename T> static T Min(T val1, T val2);
 
+};
 
 APP_END_NAMESPACE
 

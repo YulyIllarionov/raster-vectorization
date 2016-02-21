@@ -53,6 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,6 +82,9 @@
   <ItemGroup>
     <ClInclude Include="app\app_const.h" />
     <ClInclude Include="base_types.h" />
+    <ClInclude Include="graphics\skeletonization.h" />
+    <ClInclude Include="graphics\vectorization.h" />
+    <ClInclude Include="image_reader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="util\math_utils.h" />
@@ -88,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base_types.cpp" />
+    <ClCompile Include="graphics\skeletonization.cpp" />
+    <ClCompile Include="graphics\vectorization.cpp" />
+    <ClCompile Include="image_reader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
