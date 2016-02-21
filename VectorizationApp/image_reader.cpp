@@ -1,4 +1,6 @@
-#include "ImageReader.h"
+
+#include "stdafx.h"
+#include "image_reader.h"
 
 
 

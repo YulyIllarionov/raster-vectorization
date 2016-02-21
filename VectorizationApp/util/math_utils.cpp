@@ -6,9 +6,16 @@
 #include "stdafx.h"
 #include "math_utils.h"
 
-
 APP_BEGIN_NAMESPACE
 
+template<typename T> T MathUtils::Max(T val1, T val2)
+{
+  return val1 > val2 ? val1 : val2;
+}
 
+template<typename T> T MathUtils::Min(T val1, T val2)
+{
+  return val1 < val2 ? val1 : val2;
+}
 
 APP_END_NAMESPACE
