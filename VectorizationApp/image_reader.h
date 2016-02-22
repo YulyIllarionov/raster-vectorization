@@ -30,6 +30,7 @@ public:
 	int getWidth() { return width; };
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
+    void saveAsBMP(char *filename);
 private:
 	WColor **image;
 	int width;

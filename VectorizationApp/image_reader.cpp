@@ -81,5 +81,20 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	return index;
 }
 
+void WImageRaster::saveAsBMP(char * filename)
+{
+    CImg<unsigned char> imageBMP(width, height, 1, 1, 0);
+
+    for (int x = 0; x < width; x++)
+    {
+        for (int y = 0; y <height; y++)
+        {
+            *imageBMP.data(x, y, 0, 0) = image[y][x];
+        }
+    }
+    imageBMP.save(filename);
+
+}
+
 
 APP_END_NAMESPACE
