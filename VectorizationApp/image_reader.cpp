@@ -42,9 +42,9 @@ WImageRaster::WImageRaster(const WImageRaster* imageToCopy)
 	image= new WColor*[width];
 	for (int i = 0; i < width; i++)
 		image[i] = new WColor[height];
-	for (int x = 0; x < imageToCopy->getWidth(); x++)
+	for (int x = 0; x < width; x++)
 	{
-		for (int y = 0; y < imageToCopy->getHeight(); y++)
+		for (int y = 0; y < height; y++)
 		{
 			this->image[x][y] = imageToCopy->at(x,y);
 		}

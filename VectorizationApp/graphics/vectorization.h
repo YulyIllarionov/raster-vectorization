@@ -14,16 +14,18 @@ APP_BEGIN_NAMESPACE
 
 class Vectorization
 {
-private:
-	WImageRaster* imageRaster;
-	WImageRaster* imageRasterTemp;
-	std::vector<WLine> lines;
-
+public:
 	Vectorization ();
 	Vectorization (WImageRaster* imageRaster);
 	virtual ~Vectorization(); 
 	void onSkeleton();
-}
+
+private:
+	WImageRaster* imageRaster;
+	WImageRaster* imageRasterTemp;
+	std::vector<WLine> lines;
+	
+};
 
 
 APP_END_NAMESPACE

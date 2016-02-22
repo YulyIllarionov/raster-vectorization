@@ -72,7 +72,7 @@ public:
   // points
   void AddPoint(const WPixel& point) { m_pixels.push_back(point); };
   bool AddPointAt(const WPixel& point, int idx);
-  WPixel getPixel(int idx) { return m_pixels.size() > idx ? m_points[idx] : WPixel::Empty(); };
+  WPixel getPixel(int idx) { return m_pixels.size() > idx ? m_pixels[idx] : WPixel::Empty(); };
   bool RemovePoint(int idx);
   int Lenght(){ return m_pixels.size(); }; 
   WPixelsContainer getPixels() { return m_pixels; }
