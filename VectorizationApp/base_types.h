@@ -29,6 +29,7 @@ public:
 	virtual ~WPoint(); 
 
 	static WPoint Empty() { return WPoint(); };
+    bool IsEmpty() { return ((x<0)&&(y<0)); };
 
 	WPoint& operator=(const WPoint& other);
 	bool operator==(const WPoint& other);

@@ -110,6 +110,7 @@ bool WLine::Concat(WLine line)
 	{
 		return false;
 	}
+    line.RemovePoint(0);
 	this->m_pixels.insert( this->m_pixels.begin(), line.getPixels().begin(), line.getPixels().end() );
 	return true;
 }
