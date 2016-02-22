@@ -21,7 +21,6 @@ WPoint& WPoint::operator=(const WPoint& other)
 {
 	this->x=other.x;
 	this->y=other.y;
-  return *this;
 }
 
 WPoint::WPoint(int x_, int y_)
@@ -35,12 +34,12 @@ WPixel::~WPixel(void)
 }
 
 WPixel::WPixel() :
-  m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
+m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
 {
 }
 
-WPixel::WPixel(WColor color, int x_, int y_) :
-  m_color(color), m_isInitialized(true)
+WPixel::WPixel(WColor color, int x_ = -1, int y_ = -1) :
+m_isInitialized(true)
 {
 
 }

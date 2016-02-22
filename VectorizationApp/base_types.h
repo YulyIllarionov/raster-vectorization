@@ -44,8 +44,6 @@ public:
   static WPixel Empty() { return WPixel(); };
   // check if point is empty
   bool IsEmpty() { return m_isInitialized; };
-  // Compare
-  bool Equal(int color) { return color == m_color; }
 
 private:
 
