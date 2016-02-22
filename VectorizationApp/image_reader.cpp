@@ -81,7 +81,6 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	return index;
 }
 
-<<<<<<< HEAD
 WPoint WImageRaster::NeihborClockwise (WPoint point)
 {
     int x_=point.x;
@@ -139,62 +138,63 @@ WPoint WImageRaster::NeihborClockwise (WPoint point)
     return neihbor;
 }
 
-WPoint WImageRaster::NeihborCounterClockwise (WPoint point)
+WPoint WImageRaster::NeihborCounterClockwise(WPoint point)
 {
-    int x_=point.x;
-    int y_=point.y;
+    int x_ = point.x;
+    int y_ = point.y;
     WPoint neihbor;
     WColor color(image[y_][x_]);
-    if (image[--y_][x_]==color)
+    if (image[--y_][x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[y_][--x_]==color)
+    if (image[y_][--x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[++y_][x_]==color)
+    if (image[++y_][x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[++y_][x_]==color)
+    if (image[++y_][x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[y_][++x_]==color)
+    if (image[y_][++x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[y_][++x_]==color)
+    if (image[y_][++x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[--y_][x_]==color)
+    if (image[--y_][x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
-    if (image[--y_][x_]==color)
+    if (image[--y_][x_] == color)
     {
-        neihbor.x=x_;
-        neihbor.y=y_;
+        neihbor.x = x_;
+        neihbor.y = y_;
         return neihbor;
     }
     return neihbor;
-=======
+}
+
 void WImageRaster::saveAsBMP(char * filename)
 {
     CImg<unsigned char> imageBMP(width, height, 1, 1, 0);
@@ -207,8 +207,6 @@ void WImageRaster::saveAsBMP(char * filename)
         }
     }
     imageBMP.save(filename);
-
->>>>>>> zko
 }
 
 

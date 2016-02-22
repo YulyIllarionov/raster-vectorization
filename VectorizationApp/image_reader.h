@@ -30,14 +30,13 @@ public:
 	int getWidth() { return width; };
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
-<<<<<<< HEAD
 
     WPoint NeihborClockwise (WPoint point);
     WPoint NeihborCounterClockwise (WPoint point);
 
-=======
+
     void saveAsBMP(char *filename);
->>>>>>> zko
+
 private:
 	WColor **image;
 	int width;
