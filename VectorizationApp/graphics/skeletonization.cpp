@@ -5,6 +5,7 @@
 
 #include "stdafx.h"
 #include "skeletonization.h"
+#include "libs\dl_codes.h"
 
 APP_BEGIN_NAMESPACE
 
@@ -14,7 +15,7 @@ WSkeletonizer::SkeletonTemplate::SkeletonTemplate(int row, int column, int cente
   : m_center(std::make_pair<int, int>(center_x, center_y))
 {
   m_points.clear();
-  m_points.resize(row);
+  m_points.reserve(row);
   /*for (int i = 0; i < row; ++i)
   {
     m_points.push_back(TemplateRow(column));
@@ -119,51 +120,192 @@ void WSkeletonizer::InitializeTemplates()
   // x 0 0
   // 1 c 0
   // x 1 x
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Any);        row1.push_back(Background); row1.push_back(Background);
+    row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Background);
+    row3.push_back(Any);        row3.push_back(Foreground); row3.push_back(Any);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #6
   // x 1 1 
   // 0 c 1
   // 0 0 x
 
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Any);        row1.push_back(Foreground); row1.push_back(Foreground);
+    row2.push_back(Background); row2.push_back(C);          row2.push_back(Foreground);
+    row3.push_back(Background); row3.push_back(Background); row3.push_back(Any);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
+
   // #7
   // 0 1 0
   // 0 c 1
   // 0 0 0
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Background); row1.push_back(Foreground); row1.push_back(Background);
+    row2.push_back(Background); row2.push_back(C);          row2.push_back(Foreground);
+    row3.push_back(Background); row3.push_back(Background); row3.push_back(Background);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #8
   // x 1 x
   // 1 c 0
   // x 0 0
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Any);        row1.push_back(Foreground); row1.push_back(Any);
+    row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Background);
+    row3.push_back(Any);        row3.push_back(Background); row3.push_back(Background);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #9
   // 0 0 x
   // 0 x 1
   // x 1 1
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Background); row1.push_back(Background); row1.push_back(Any);
+    row2.push_back(Background); row2.push_back(Any);        row2.push_back(Foreground);
+    row3.push_back(Any);        row3.push_back(Foreground); row3.push_back(Foreground);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #10
   // 0 0 0
   // 0 c 1
   // 0 1 0
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Background); row1.push_back(Background); row1.push_back(Background);
+    row2.push_back(Background); row2.push_back(C);          row2.push_back(Foreground);
+    row3.push_back(Background); row3.push_back(Foreground); row3.push_back(Background);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #11
   // 0 0 0
   // 0 c 0
   // 1 1 1
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Background); row1.push_back(Background); row1.push_back(Background);
+    row2.push_back(Background); row2.push_back(C);          row2.push_back(Background);
+    row3.push_back(Foreground); row3.push_back(Foreground); row3.push_back(Foreground);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #12
   // 1 0 0
   // 1 c 0
   // 1 0 0
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Foreground); row1.push_back(Background); row1.push_back(Background);
+    row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Background);
+    row3.push_back(Foreground); row3.push_back(Background); row3.push_back(Background);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #13
   // 1 1 1
   // 0 c 0
   // 0 0 0
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Foreground);
+    row2.push_back(Background); row2.push_back(C);          row2.push_back(Background);
+    row3.push_back(Background); row3.push_back(Background); row3.push_back(Background);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
   // #14
   // 0 0 1
   // 0 c 1
   // 0 0 1
+  {
+    SkeletonTemplate _template(3, 3, 1, 1);
+
+    SRow row1, row2, row3;
+    row1.push_back(Background); row1.push_back(Background); row1.push_back(Foreground);
+    row2.push_back(Background); row2.push_back(C);          row2.push_back(Foreground);
+    row3.push_back(Background); row3.push_back(Background); row3.push_back(Foreground);
+
+    _template.m_points.push_back(row1);
+    _template.m_points.push_back(row2);
+    _template.m_points.push_back(row3);
+
+    m_templates.push_back(_template);
+  }
 
 }
 
@@ -262,13 +404,16 @@ void WSkeletonizer::InitializeTemplatesExt()
 
 bool WSkeletonizer::InitializeSkeletonByRaster(/*const*/ WImageRaster& raster, WSkeleton& skeleton)
 {
+  //int debug_foreground_count = 0;
   skeleton.resize(raster.getHeight());
   for (int i = 0; i < raster.getHeight(); i++)
   {
     skeleton[i].resize(raster.getWidth());
     for (int j = 0; j < raster.getWidth(); j++)
     {
-      skeleton[i][j] = raster.at(i, j) == WCOLOR_WHITE ? Background : Foreground;
+      skeleton[i][j] = raster.at(j, i) == WCOLOR_WHITE ? Background : Foreground;
+      //if (raster.at(j, i) != WCOLOR_WHITE)
+      //  debug_foreground_count++;
     }
   }
   return true;
@@ -323,9 +468,9 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
     {
       // is pattern could be checked
       if (coord_x - center_x + i < 0
-        || coord_x - center_x + i >= _template.m_points[i].size()
+        || coord_x - center_x + i >= skeleton[i].size()
         || coord_y - center_y + j < 0
-        || coord_y - center_y + j >= _template.m_points.size())
+        || coord_y - center_y + j >= skeleton.size())
       {
         continue;
       }
@@ -425,6 +570,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
   WSkeleton curr_skeleton;
   bool pixel_was_deleted = false;
   do {
+    pixel_was_deleted = false;
     curr_skeleton = next_skeleton; // ???
     for (size_t i = 0; i < curr_skeleton.size(); i++)
     {
@@ -503,9 +649,9 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
     for (size_t j = 0; j < next_skeleton[i].size(); j++)
     {
       if ((next_skeleton[i][j] & Foreground) != 0)
-        _skeleton.at(i, j) = raster.at(i, j);
+        _skeleton.at(j, i) = raster.at(j, i);
       else
-        _skeleton.at(i, j) = WCOLOR_WHITE;
+        _skeleton.at(j, i) = /*7;*/ WCOLOR_WHITE;
 
     }
   }

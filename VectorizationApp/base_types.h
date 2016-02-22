@@ -20,7 +20,7 @@ typedef std::vector<WPoint>                WPointsContainer;
 typedef std::vector<std::vector<WPixel> >  WMatrix;
 typedef unsigned char                      WColor;
 
-#define WCOLOR_WHITE 0
+#define WCOLOR_WHITE 255
 
 class WPoint
 {
