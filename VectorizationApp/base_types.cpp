@@ -70,6 +70,10 @@ WLine::WLine(void) :
   m_scaler(1), m_width(-1)  
 {
 }
+WLine::~WLine()
+{
+
+}
 
 bool WLine::RemovePoint(int idx)
 {
