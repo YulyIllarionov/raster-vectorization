@@ -17,6 +17,12 @@ x(-1),y(-1)
 {
 }
 
+WPoint::WPoint(int x_, int y_)
+{
+	x=x_;
+	y=y_;
+}
+
 WPoint& WPoint::operator=(const WPoint& other)
 {
 	this->x=other.x;
@@ -41,33 +47,24 @@ bool WPoint::operator!=(const WPoint& other)
 	return true;
 }
 
-WPoint::WPoint(int x_, int y_)
-{
-	x=x_;
-	y=y_;
-}
-
 WPixel::~WPixel(void)
 {
 }
 
 WPixel::WPixel() :
-m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
+WPoint(), m_color(WCOLOR_WHITE /*TODO: init by palette color default */), m_isInitialized(true)
 {
+
 }
 
 WPixel::WPixel(WColor color, int x_ = -1, int y_ = -1) :
-m_isInitialized(true)
+WPoint (x_, y_), m_color(color), m_isInitialized(true)
 {
 
-}
-
-WLine::~WLine(void) 
-{
 }
 
 WLine::WLine(void) :
-m_width(-1)  
+m_scaler(1), m_width(-1)  
 {
 }
 
@@ -93,6 +90,12 @@ void WLine::setWidth(double width)
 {
 	m_width = width;
 }
+
+void WLine::setScaler(int scaler)
+{
+	m_scaler=scaler;
+}
+
 
 bool WLine::Concat(WLine line)
 {

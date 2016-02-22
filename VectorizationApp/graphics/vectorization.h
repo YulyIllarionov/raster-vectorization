@@ -10,7 +10,6 @@
 // for includes
 #include "..\app\app_const.h"
 
-
 APP_BEGIN_NAMESPACE
 
 class Vectorization
@@ -23,6 +22,7 @@ private:
 	Vectorization ();
 	Vectorization (WImageRaster* imageRaster);
 	virtual ~Vectorization(); 
+	void onSkeleton();
 }
 
 

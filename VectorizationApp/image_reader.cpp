@@ -43,7 +43,7 @@ WImageRaster::WImageRaster(const WImageRaster* imageToCopy)
 	{
 		for (int y = 0; y < height; y++)
 		{
-			this->image[y][x] = imageToCopy->at(WPoint(x,y));
+			this->image[y][x] = imageToCopy->at(x,y);
 		}
 	}
 }
@@ -51,16 +51,6 @@ WImageRaster::WImageRaster(const WImageRaster* imageToCopy)
 WColor ** WImageRaster::getImagePtr()
 {
 	return image;
-}
-
-int WImageRaster::getWidth()
-{
-	return width;
-}
-
-int WImageRaster::getHeight()
-{
-	return height;
 }
 
 int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна замена на WColor
