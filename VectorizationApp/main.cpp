@@ -13,28 +13,10 @@ using namespace APP_NAMESPACE;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    //WImageRaster image("test vector.bmp");
+    WImageRaster image("test vector.bmp");
     
-    //bool result = WSkeletonizer::Instance().Skeletonize(image, image);
+    bool result = WSkeletonizer::Instance().Skeletonize(image, image);
 
-    //image.saveAsBMP("temp2.bmp");
-   /* Vectorization vc;
-    WLine line1;
-    line1.AddPoint(WPoint(0, 0));
-    line1.AddPoint(WPoint(40, 40));
-    line1.AddPoint(WPoint(20, 40));
-    line1.setColor(DL_Codes::red);
-    line1.setWidth(3);
-    line1.setScaler(1);
-
-    WLine line2;
-    line2.AddPoint(WPoint(60, 60));
-    line2.AddPoint(WPoint(70,0));
-    line2.setColor(DL_Codes::black);
-    line2.setWidth(10);
-    line2.setScaler(1);
-    vc.m_lines.push_back(line1);
-    vc.m_lines.push_back(line2);
-    vc.linesToFile("temp.dxf");*/
+    image.saveAsBMP("temp2.bmp");
     return 0;
 }

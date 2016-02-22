@@ -31,6 +31,12 @@
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{826e3244-69ab-4bee-86bb-c848c52fd760}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\libs">
+      <UniqueIdentifier>{b69d0806-124f-4066-84df-bbcc13d2db22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libs">
+      <UniqueIdentifier>{b844e0ae-4ccb-4e4f-bb04-28c524da9717}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -66,6 +72,36 @@
     <ClInclude Include="WDxfWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="libs\dl_codes.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_creationadapter.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_dxf.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_entities.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_exception.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_extrusion.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_global.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_writer.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_writer_ascii.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_attributes.h">
+      <Filter>Header Files\libs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -94,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="WDxfWriter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\dl_dxf.cpp">
+      <Filter>Source Files\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\dl_writer_ascii.cpp">
+      <Filter>Source Files\libs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

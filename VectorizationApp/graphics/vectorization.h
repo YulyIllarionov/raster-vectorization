@@ -23,11 +23,10 @@ public:
 	virtual ~Vectorization(); 
 	void onSkeleton();
     void linesToFile(char *filename);
-    std::vector<WLine> m_lines;
 private:
 	WImageRaster* m_imageRaster;
 	WImageRaster* m_imageRasterTemp;
-	//std::vector<WLine> m_lines;
+	std::vector<WLine> m_lines;
 	
 };
 
