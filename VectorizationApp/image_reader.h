@@ -34,6 +34,9 @@ public:
     WPoint NeihborClockwise (WPoint point);
     WPoint NeihborCounterClockwise (WPoint point);
 
+
+    void saveAsBMP(char *filename);
+
 private:
 	WColor **image;
 	int width;
