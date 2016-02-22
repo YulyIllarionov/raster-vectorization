@@ -11,7 +11,7 @@ using namespace white_app;
 int _tmain(int argc, _TCHAR* argv[])
 {
     WImageRaster image("C:\\temp.bmp");
-    CImg<unsigned char> image2(image.getWidth(), image.getHeight(), 1, 3,0);
+    CImg<unsigned char> image2(image.getWidth(), image.getHeight(), 1, 1,0);
     unsigned char *ptr2 = image2.data();
 
     WColor **ptr = image.getImagePtr();
@@ -21,10 +21,6 @@ int _tmain(int argc, _TCHAR* argv[])
         for (int y = 0; y < image.getHeight(); y++)
         {
             *image2.data(x,y,0,0) = ptr[y][x];
-            *image2.data(x, y, 0, 1) = ptr[y][x];
-            *image2.data(x, y, 0, 2) = ptr[y][x];
-            //ptr2[3 * (x + y) + 1] = ptr[y][x];
-            //ptr2[3 * (x + y) + 2] = ptr[y][x];
         }
     }
     image2.save("temp2.bmp");
