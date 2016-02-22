@@ -28,13 +28,13 @@ WImageRaster::WImageRaster(char *filename)
 	CImg<unsigned char> Cimage(filename);
 	width = Cimage.width();
 	height = Cimage.height();
-	image= new WColor*[width];
-	for (int i = 0; i < width; i++)
-		image[i] = new WColor[height];
+	image= new WColor*[height];
+	for (int i = 0; i < height; i++)
+		image[i] = new WColor[width];
 	unsigned char* ptr = Cimage.data(0, 0);
-	for (int i = 0;i < width;i++)
+	for (int i = 0;i < height;i++)
 	{
-		for (int j = 0;j < height;j++)
+		for (int j = 0;j < width;j++)
 		{
 			image[i][j] = getDXFColor((int)ptr[0], (int)ptr[1], (int)ptr[2]);
 		}
@@ -42,18 +42,21 @@ WImageRaster::WImageRaster(char *filename)
 	}
 }
 
-WImageRaster::WImageRaster(const WImageRaster* imageToCopy)
+WImageRaster::WImageRaster( WImageRaster* imageToCopy)
 {
-	image= new WColor*[width];
-	for (int i = 0; i < width; i++)
-		image[i] = new WColor[height];
-	for (int x = 0; x < width; x++)
+	image = new WColor*[imageToCopy->getHeight()];
+	for (int i = 0; i < imageToCopy->getHeight(); i++)
+		image[i] = new WColor[imageToCopy->getWidth()];
+ for (int x = 0; x < imageToCopy->getWidth(); x++)
   {
-    for (int y = 0; y < height; y++)
+    for (int y = 0; y < imageToCopy->getHeight(); y++)
     {
-      this->image[x][y] = const_cast<WImageRaster*>(imageToCopy)->at(x, y);
+      this->image[y][x] = imageToCopy->at(x, y);
     }
   }
+	 this->width = imageToCopy->getWidth();
+	 this->height = imageToCopy->getHeight();
+
 }
 
 WColor ** WImageRaster::getImagePtr()
@@ -67,9 +70,9 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	int index;
 	for (int i = 0;i < 256;i++)
 	{
-		if (minRed > abs((double)red / 255 - dxfColors[i][0])&&
-			minGreen>abs((double)green / 255 - dxfColors[i][1]) &&
-			minBlue > abs((double)blue / 255 - dxfColors[i][2]))
+		if (minRed >= abs((double)red / 255 - dxfColors[i][0])&&
+			minGreen>=abs((double)green / 255 - dxfColors[i][1]) &&
+			minBlue >= abs((double)blue / 255 - dxfColors[i][2]))
 		{
 			index = i;
 			minRed=abs((double)red / 255 - dxfColors[i][0]);
