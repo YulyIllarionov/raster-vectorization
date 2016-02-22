@@ -48,12 +48,12 @@ WImageRaster::WImageRaster(const WImageRaster* imageToCopy)
 	for (int i = 0; i < width; i++)
 		image[i] = new WColor[height];
 	for (int x = 0; x < width; x++)
-	{
-		for (int y = 0; y < height; y++)
-		{
-			this->image[x][y] = imageToCopy->at(x,y);
-		}
-	}
+  {
+    for (int y = 0; y < height; y++)
+    {
+      this->image[x][y] = const_cast<WImageRaster*>(imageToCopy)->at(x, y);
+    }
+  }
 }
 
 WColor ** WImageRaster::getImagePtr()
