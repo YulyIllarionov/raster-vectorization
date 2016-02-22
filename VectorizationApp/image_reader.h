@@ -31,10 +31,10 @@ public:
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
 
-    int NeihborClockwise(WPoint& point);
-    int NeihborCounterClockwise(WPoint& point);
+  int NeihborClockwise(WPoint& point);
+  int NeihborCounterClockwise(WPoint& point);
 
-    void saveAsBMP(char *filename);
+  void saveAsBMP(char *filename);
 
 private:
 	WColor **image;

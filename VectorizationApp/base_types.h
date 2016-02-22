@@ -73,9 +73,9 @@ public:
 
   // points
   void AddPoint(const WPoint& point) { m_points.push_back(point); };
-  bool AddPointAt(const WPoint& point, int idx);
-  WPoint getPoint(int idx) { return m_points.size() > idx ? m_points[idx] : WPoint::Empty(); };
-  bool RemovePoint(int idx);
+  bool AddPointAt(const WPoint& point, size_t idx);
+  WPoint getPoint(size_t idx) { return m_points.size() > idx ? m_points[idx] : WPoint::Empty(); };
+  bool RemovePoint(size_t idx);
   int Lenght(){ return m_points.size(); }; 
   WPointsContainer getPoints() { return m_points; }
   bool Concat(WLine line); //TODO перейти к двум параметрам 

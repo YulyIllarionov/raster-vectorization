@@ -8,6 +8,7 @@
 #pragma once
 
 #include "..\app\app_const.h"
+#include "..\image_reader.h"
 #include "base_types.h"
 #include <vector>
 
@@ -57,13 +58,14 @@ public:
   // Initialize extended templates
   void InitializeTemplatesExt();
 
-  bool Skeletonize(/*const*/ WMatrix& raster, WMatrix& skeleton);
+  //bool Skeletonize(/*const*/ WMatrix& raster, WMatrix& skeleton);
+  bool Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& skeleton);
 
 
 private:
 
 
-  bool InitializeSkeletonByRaster(/*const*/ WMatrix& raster, WSkeleton& skeleton);
+  bool InitializeSkeletonByRaster(/*const*/ WImageRaster& raster, WSkeleton& skeleton);
 
   // pattern matching 
   // [out] index of matched pattern

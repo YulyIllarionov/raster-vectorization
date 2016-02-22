@@ -75,7 +75,7 @@ WLine::~WLine()
 
 }
 
-bool WLine::RemovePoint(int idx)
+bool WLine::RemovePoint(size_t idx)
 {
 	if ((m_points.size() > idx) && (!m_points.empty()))
 	{
@@ -85,7 +85,7 @@ bool WLine::RemovePoint(int idx)
 	return false;
 }
 
-bool WLine::AddPointAt(const WPoint& point, int idx)
+bool WLine::AddPointAt(const WPoint& point, size_t idx)
 {
 	if (m_points.size() < idx)
 		return false;

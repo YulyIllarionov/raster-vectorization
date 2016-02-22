@@ -8,7 +8,6 @@
 
 APP_BEGIN_NAMESPACE
 
-const int kColorNone = 0;
 
 WSkeletonizer::SkeletonTemplate::SkeletonTemplate(int row, int column, int center_x, int center_y)
   : m_center(std::make_pair<int, int>(center_x, center_y))
@@ -253,15 +252,15 @@ void WSkeletonizer::InitializeTemplatesExt()
 
 }
 
-bool WSkeletonizer::InitializeSkeletonByRaster(/*const*/ WMatrix& raster, WSkeleton& skeleton)
+bool WSkeletonizer::InitializeSkeletonByRaster(/*const*/ WImageRaster& raster, WSkeleton& skeleton)
 {
-  skeleton.reserve(raster.size());
-  for (int i = 0; i < raster.size(); i++)
+  skeleton.reserve(raster.getHeight());
+  for (int i = 0; i < raster.getHeight(); i++)
   {
-    skeleton[i].reserve(raster[i].size());
-    for (int j = 0; j < raster[i].size(); j++)
+    skeleton[i].reserve(raster.getWidth());
+    for (int j = 0; j < raster.getWidth(); j++)
     {
-      skeleton[i][j] = raster[i][j].Equal(kColorNone) ? Background : Foreground;
+      skeleton[i][j] = raster.at(i, j) == WCOLOR_WHITE ? Background : Foreground;
     }
   }
   return true;
@@ -269,7 +268,7 @@ bool WSkeletonizer::InitializeSkeletonByRaster(/*const*/ WMatrix& raster, WSkele
 
 int WSkeletonizer::MatchPatterns(WSkeleton& skeleton, int coord_x, int coord_y)
 {
-  for (int i = 0; i < m_templates.size(); i++)
+  for (size_t i = 0; i < m_templates.size(); i++)
   {
     if (MatchPattern(m_templates[i], skeleton, coord_x, coord_y))
       return i;
@@ -298,18 +297,21 @@ int WSkeletonizer::MatchPatterns(WSkeleton& skeleton, int coord_x, int coord_y)
 //  return false;
 //}
 
-bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleton, 
+bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleton,
   int coord_x, int coord_y)
 {
   //if (IsPatternCouldBeChecked(_template, skeleton, coord_x, coord_y))
   //  return false;
 
+  if (_template.m_points.size() == 0 || skeleton.size() == 0)
+    return false;
+
   int center_x = _template.m_center.first;
   int center_y = _template.m_center.second;
 
-  for (int i = 0; i < _template.m_points.size(); i++)
+  for (size_t i = 0; i < _template.m_points.size(); i++)
   {
-    for (int j = 0; j < _template.m_points[i].size(); j++)
+    for (size_t j = 0; j < _template.m_points[i].size(); j++)
     {
       // is pattern could be checked
       if (coord_x - center_x + i < 0
@@ -320,13 +322,15 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
         continue;
       }
 
-      if (skeleton[coord_x - center_x + i][coord_y - center_y + j]
-        & _template.m_points[i][j] == 0)
+      if ((skeleton[coord_x - center_x + i][coord_y - center_y + j]
+        & _template.m_points[i][j]) == 0)
       {
         return false;
       }
     }
   }
+
+  return true;
 }
 
 bool WSkeletonizer::IsConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y)
@@ -336,36 +340,36 @@ bool WSkeletonizer::IsConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int c
   // p4 p  p0
   // p3 p2 p1
 
-  if (coord_x - 1 < 0 || coord_x + 1 >= skeleton[0].size()
-    || coord_y - 1 < 0 || coord_y + 1 >= skeleton.size())
+  if (coord_x - 1 < 0 || coord_x + 1 >= (int)skeleton[0].size()
+    || coord_y - 1 < 0 || coord_y + 1 >= (int)skeleton.size())
   {
     return false;
   }
 
   int background_pixels = 0;
 
-  if (skeleton[coord_x + 1][coord_y] & Background != 0)
+  if ((skeleton[coord_x + 1][coord_y] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x + 1][coord_y - 1] & Background != 0)
+  if ((skeleton[coord_x + 1][coord_y - 1] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x][coord_y - 1] & Background != 0)
+  if ((skeleton[coord_x][coord_y - 1] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x - 1][coord_y - 1] & Background != 0)
+  if ((skeleton[coord_x - 1][coord_y - 1] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x - 1][coord_y] & Background != 0)
+  if ((skeleton[coord_x - 1][coord_y] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x - 1][coord_y + 1] & Background != 0)
+  if ((skeleton[coord_x - 1][coord_y + 1] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x][coord_y + 1] & Background != 0)
+  if ((skeleton[coord_x][coord_y + 1] & Background) != 0)
     background_pixels++;
 
-  if (skeleton[coord_x + 1][coord_y + 1] & Background != 0)
+  if ((skeleton[coord_x + 1][coord_y + 1] & Background) != 0)
     background_pixels++;
 
   return background_pixels == 1;
@@ -393,16 +397,18 @@ bool WSkeletonizer::IsCandidateConcaveCornelPixel(WSkeleton& skeleton,
 }
 
 
-bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
+bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _skeleton)
 {
-  _skeleton.clear();
+  /*_skeleton.clear();
 
   // resize out skeleton
   _skeleton.resize(raster.size());
   for (int i = 0; i < raster.size(); i++)
   {
     _skeleton[i].resize(raster[i].size());
-  }
+  }*/
+
+  
   
   WSkeleton next_skeleton;
   if (!InitializeSkeletonByRaster(raster, next_skeleton))
@@ -412,9 +418,9 @@ bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
   bool pixel_was_deleted = false;
   do {
     curr_skeleton = next_skeleton; // ???
-    for (int i = 0; i < curr_skeleton.size(); i++)
+    for (size_t i = 0; i < curr_skeleton.size(); i++)
     {
-      for (int j = 0; j < curr_skeleton[i].size(); j++)
+      for (size_t j = 0; j < curr_skeleton[i].size(); j++)
       {
         if (curr_skeleton[i][j] == Foreground )
         {
@@ -430,7 +436,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
           if (IsCandidateConcaveCornelPixel(curr_skeleton, i - 1, j - 1, pattern_num))
           {
             // check if marked
-            if (curr_skeleton[i - 1][j - 1] & Marked == 0)
+            if ((curr_skeleton[i - 1][j - 1] & Marked) == 0)
             {
               next_skeleton[i - 1][j - 1] |= Marked; // if not then mark
             }
@@ -443,7 +449,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
           if (IsCandidateConcaveCornelPixel(curr_skeleton, i - 1, j + 1, pattern_num))
           {
             // check if marked
-            if (curr_skeleton[i - 1][j + 1] & Marked == 0)
+            if ((curr_skeleton[i - 1][j + 1] & Marked) == 0)
             {
               next_skeleton[i - 1][j + 1] |= Marked; // if not then mark
             }
@@ -456,7 +462,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
           if (IsCandidateConcaveCornelPixel(curr_skeleton, i + 1, j + 1, pattern_num))
           {
             // check if marked
-            if (curr_skeleton[i + 1][j + 1] & Marked == 0)
+            if ((curr_skeleton[i + 1][j + 1] & Marked) == 0)
             {
               next_skeleton[i + 1][j + 1] |= Marked; // if not then mark
             }
@@ -469,7 +475,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
           if (IsCandidateConcaveCornelPixel(curr_skeleton, i + 1, j - 1, pattern_num))
           {
             // check if marked
-            if (curr_skeleton[i + 1][j - 1] & Marked == 0)
+            if ((curr_skeleton[i + 1][j - 1] & Marked) == 0)
             {
               next_skeleton[i + 1][j - 1] |= Marked; // if not then mark
             }
@@ -484,12 +490,15 @@ bool WSkeletonizer::Skeletonize(/*const*/ WMatrix& raster, WMatrix& _skeleton)
     }
   } while (pixel_was_deleted);
 
-  for (int i = 0; i < next_skeleton.size(); i++)
+  for (size_t i = 0; i < next_skeleton.size(); i++)
   {
-    for (int j = 0; j < next_skeleton[i].size(); j++)
+    for (size_t j = 0; j < next_skeleton[i].size(); j++)
     {
-      if (next_skeleton[i][j] & Background)
-        _skeleton[i][j] = raster[i][j];
+      if ((next_skeleton[i][j] & Foreground) != 0)
+        _skeleton.at(i, j) = raster.at(i, j);
+      else
+        _skeleton.at(i, j) = WCOLOR_WHITE;
+
     }
   }
 
