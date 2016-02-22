@@ -50,13 +50,13 @@ class WSkeletonizer
 
 
 public:
-  WSkeletonizer();
-  
-  // Initialize main templates
-  void InitializeTemplates();
 
-  // Initialize extended templates
-  void InitializeTemplatesExt();
+  //static WSkeletonizer* Instance();
+
+  static WSkeletonizer& Instance() {
+    static WSkeletonizer instance;
+    return instance;
+  }
 
   //bool Skeletonize(/*const*/ WMatrix& raster, WMatrix& skeleton);
   bool Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& skeleton);
@@ -64,8 +64,17 @@ public:
 
 private:
 
+  WSkeletonizer();
+  WSkeletonizer(const WSkeletonizer&);
+  WSkeletonizer& operator=(WSkeletonizer&);
 
-  bool InitializeSkeletonByRaster(/*const*/ WImageRaster& raster, WSkeleton& skeleton);
+  // Initialize main templates
+  void InitializeTemplates();
+
+  // Initialize extended templates
+  void InitializeTemplatesExt();
+
+  static bool InitializeSkeletonByRaster(/*const*/ WImageRaster& raster, WSkeleton& skeleton);
 
   // pattern matching 
   // [out] index of matched pattern
@@ -80,13 +89,15 @@ private:
   //  int coord_x, int coord_y);
 
   // iû concave corner pixel
-  bool IsConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y);
+  static bool IsConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y);
   // is candidate for concave corner pixel
-  bool IsCandidateConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y, int pattern_num);
+  static bool IsCandidateConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y, int pattern_num);
 
 
   vector<SkeletonTemplate> m_templates;
   vector<SkeletonTemplate> m_templates_ext;
+
+  //static WSkeletonizer* m_instance;
 
 };
 

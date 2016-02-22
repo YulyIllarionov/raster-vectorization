@@ -8,6 +8,7 @@
 
 APP_BEGIN_NAMESPACE
 
+//WSkeletonizer* WSkeletonizer::m_instance = nullptr;
 
 WSkeletonizer::SkeletonTemplate::SkeletonTemplate(int row, int column, int center_x, int center_y)
   : m_center(std::make_pair<int, int>(center_x, center_y))
@@ -25,6 +26,13 @@ WSkeletonizer::WSkeletonizer()
   InitializeTemplates();
   InitializeTemplatesExt();
 }
+
+/*WSkeletonizer* WSkeletonizer::Instance()
+{
+  if (m_instance == nullptr)
+    m_instance = new WSkeletonizer();
+  return m_instance;
+}*/
 
 void WSkeletonizer::InitializeTemplates()
 {
@@ -254,10 +262,10 @@ void WSkeletonizer::InitializeTemplatesExt()
 
 bool WSkeletonizer::InitializeSkeletonByRaster(/*const*/ WImageRaster& raster, WSkeleton& skeleton)
 {
-  skeleton.reserve(raster.getHeight());
+  skeleton.resize(raster.getHeight());
   for (int i = 0; i < raster.getHeight(); i++)
   {
-    skeleton[i].reserve(raster.getWidth());
+    skeleton[i].resize(raster.getWidth());
     for (int j = 0; j < raster.getWidth(); j++)
     {
       skeleton[i][j] = raster.at(i, j) == WCOLOR_WHITE ? Background : Foreground;
