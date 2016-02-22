@@ -19,6 +19,8 @@ typedef std::vector<WPixel>                WPixelsContainer;
 typedef std::vector<std::vector<WPixel> >  WMatrix;
 typedef unsigned char                      WColor;
 
+#define WCOLOR_WHITE 0
+
 class WPoint
 {
 public:
@@ -26,13 +28,19 @@ public:
 	WPoint(int x_, int y_);
 	virtual ~WPoint(); 
 
+	static WPoint Empty() { return WPoint(); };
+
 	WPoint& operator=(const WPoint& other);
+	bool operator==(const WPoint& other);
+	bool operator!=(const WPoint& other);
+
+
 
 	int x;
 	int y;
 };
 
-class WPixel
+class WPixel : public WPoint
 {
 public:
 
@@ -62,16 +70,21 @@ public:
   double getWidth() {return m_width; };
 
   // points
-  void AddPoint(const WPixel& point) { m_points.push_back(point); };
+  void AddPoint(const WPixel& point) { m_pixels.push_back(point); };
   bool AddPointAt(const WPixel& point, int idx);
-  WPixel get_Point(int idx) { return m_points.size() > idx ? m_points[idx] : WPixel::Empty(); };
+  WPixel getPixel(int idx) { return m_pixels.size() > idx ? m_pixels[idx] : WPixel::Empty(); };
   bool RemovePoint(int idx);
-  int Lenght(){ return m_points.size(); }; 
+  int Lenght(){ return m_pixels.size(); }; 
+  WPixelsContainer getPixels() { return m_pixels; }
+  bool Concat(WLine line); //TODO перейти к двум параметрам 
 
+  int getScaler() { return m_scaler; };
+  void setScaler(int scaler);
 
 private:
   double            m_width;
-  WPixelsContainer  m_points;
+  WPixelsContainer  m_pixels;
+  int m_scaler;
 };
 
 

@@ -10,10 +10,22 @@
 // for includes
 #include "..\app\app_const.h"
 
-
 APP_BEGIN_NAMESPACE
 
-// code here...
+class Vectorization
+{
+public:
+	Vectorization ();
+	Vectorization (WImageRaster* imageRaster);
+	virtual ~Vectorization(); 
+	void onSkeleton();
+
+private:
+	WImageRaster* imageRaster;
+	WImageRaster* imageRasterTemp;
+	std::vector<WLine> lines;
+	
+};
 
 
 APP_END_NAMESPACE

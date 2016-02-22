@@ -12,15 +12,9 @@ WPoint::~WPoint(void)
 {
 }
 
-WPoint::WPoint() : 
+WPoint::WPoint(void) : 
 x(-1),y(-1)
 {
-}
-
-WPoint& WPoint::operator=(const WPoint& other)
-{
-	this->x=other.x;
-	this->y=other.y;
 }
 
 WPoint::WPoint(int x_, int y_)
@@ -29,19 +23,49 @@ WPoint::WPoint(int x_, int y_)
 	y=y_;
 }
 
+WPoint& WPoint::operator=(const WPoint& other)
+{
+	this->x=other.x;
+	this->y=other.y;
+}
+
+bool WPoint::operator==(const WPoint& other) //TODO возможно inline 
+{
+	if ((this->x==other.x)&&(this->y==other.y))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool WPoint::operator!=(const WPoint& other)
+{
+	if (*this==other)
+	{
+		return false;
+	}
+	return true;
+}
+
 WPixel::~WPixel(void)
 {
 }
 
 WPixel::WPixel() :
-m_color(0 /*TODO: init by palette color default */), m_isInitialized(true)
+WPoint(), m_color(WCOLOR_WHITE /*TODO: init by palette color default */), m_isInitialized(true)
 {
+
 }
 
 WPixel::WPixel(WColor color, int x_ = -1, int y_ = -1) :
-m_isInitialized(true)
+WPoint (x_, y_), m_color(color), m_isInitialized(true)
 {
 
+}
+
+WLine::WLine(void) :
+m_scaler(1), m_width(-1)  
+{
 }
 
 bool WLine::RemovePoint(int idx)
@@ -67,5 +91,20 @@ void WLine::setWidth(double width)
 	m_width = width;
 }
 
+void WLine::setScaler(int scaler)
+{
+	m_scaler=scaler;
+}
+
+
+bool WLine::Concat(WLine line)
+{
+	if (this->getPoint(0)!=line.getPoint(0))
+	{
+		return false;
+	}
+	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
+	return true;
+}
 
 APP_END_NAMESPACE
