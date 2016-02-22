@@ -13,7 +13,17 @@
 
 APP_BEGIN_NAMESPACE
 
-// code here...
+class Vectorization
+{
+private:
+	WImageRaster* imageRaster;
+	WImageRaster* imageRasterTemp;
+	std::vector<WLine> lines;
+
+	Vectorization ();
+	Vectorization (WImageRaster* imageRaster);
+	virtual ~Vectorization(); 
+}
 
 
 APP_END_NAMESPACE

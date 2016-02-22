@@ -8,6 +8,19 @@
 
 APP_BEGIN_NAMESPACE
 
+Vectorization::~Vectorization ()
+{
+}
 
+Vectorization::Vectorization ():
+imageRaster(NULL), imageRasterTemp(NULL) //TODO не уверен в NULL, инициализация lines
+{
+}
+
+Vectorization::Vectorization (WImageRaster* image):
+imageRaster(image), imageRasterTemp(image)
+{
+
+}
 
 APP_END_NAMESPACE

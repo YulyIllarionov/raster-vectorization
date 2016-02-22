@@ -26,7 +26,13 @@ public:
 	WPoint(int x_, int y_);
 	virtual ~WPoint(); 
 
+	static WPoint Empty() { return WPoint(); };
+
 	WPoint& operator=(const WPoint& other);
+	bool operator==(const WPoint& other);
+	bool operator!=(const WPoint& other);
+
+
 
 	int x;
 	int y;
@@ -64,10 +70,11 @@ public:
   // points
   void AddPoint(const WPixel& point) { m_points.push_back(point); };
   bool AddPointAt(const WPixel& point, int idx);
-  WPixel get_Point(int idx) { return m_points.size() > idx ? m_points[idx] : WPixel::Empty(); };
+  WPoint getPoint(int idx) { return m_points.size() > idx ? m_points[idx] : WPoint::Empty(); };
   bool RemovePoint(int idx);
   int Lenght(){ return m_points.size(); }; 
-
+  WPixelsContainer getPoints() { return m_points; }
+  bool Concat(WLine line); //TODO перейти к двум параметрам 
 
 private:
   double            m_width;

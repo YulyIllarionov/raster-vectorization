@@ -1,23 +1,26 @@
 #pragma once
 #include "CImg.h"
 #include "dl_codes.h"
-#include "string"
+#include "base_types.h"
 
 using namespace cimg_library;
 using namespace std;
-class ImageReader
+using namespace white_app;
+
+class WImageRaster
 {
 public:
-	ImageReader(char *filename);
-	~ImageReader();
-	void readImage();
-	char **getImagePtr();
+	WImageRaster();
+	WImageRaster(char *filename);
+	WImageRaster(const WImageRaster* imageToCopy);
+	~WImageRaster();
+	WColor& at(WPoint point){ return image[point.y][point.x]; }; //TODO проверка выхода за границы
+	WColor** getImagePtr(); //TODO убивает защиту 
 	int getWidth();
 	int getHeight();
-	void deleteImage();
 	static int getDXFColor(int red,int green,int blue);
 private:
-	char **image;
+	WColor **image;
 	int width;
 	int height;
 	string filename;

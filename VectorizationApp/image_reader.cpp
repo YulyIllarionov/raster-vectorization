@@ -4,25 +4,28 @@
 
 
 
-ImageReader::ImageReader(char *filename)
+WImageRaster::~WImageRaster()
 {
-	this->filename = filename;
+	for (int i = 0; i<width; i++)
+	{
+		delete[] image[i];
+	}
+	delete[] image;
+}
+
+WImageRaster::WImageRaster()
+{
 	image = NULL;
 }
 
-
-ImageReader::~ImageReader()
+WImageRaster::WImageRaster(char *filename)
 {
-}
-
-void ImageReader::readImage()
-{
-	CImg<unsigned char> Cimage(filename.c_str());
+	CImg<unsigned char> Cimage(filename);
 	width = Cimage.width();
 	height = Cimage.height();
-	image= new char*[width];
+	image= new WColor*[width];
 	for (int i = 0; i < width; i++)
-		image[i] = new char[height];
+		image[i] = new WColor[height];
 	unsigned char* ptr = Cimage.data(0, 0);
 	for (int i = 0;i < width;i++)
 	{
@@ -32,34 +35,35 @@ void ImageReader::readImage()
 		}
 		ptr += 3;
 	}
-
 }
 
-char ** ImageReader::getImagePtr()
+WImageRaster::WImageRaster(const WImageRaster* imageToCopy)
+{
+	for (int x = 0; x < width; x++)
+	{
+		for (int y = 0; y < height; y++)
+		{
+			this->image[y][x] = imageToCopy->at(WPoint(x,y));
+		}
+	}
+}
+
+WColor ** WImageRaster::getImagePtr()
 {
 	return image;
 }
 
-int ImageReader::getWidth()
+int WImageRaster::getWidth()
 {
 	return width;
 }
 
-int ImageReader::getHeight()
+int WImageRaster::getHeight()
 {
 	return height;
 }
 
-void ImageReader::deleteImage()
-{
-	for (int i = 0; i<width; i++)
-	{
-		delete[] image[i];
-	}
-	delete[] image;
-}
-
-int ImageReader::getDXFColor(int red, int green, int blue)
+int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна замена на WColor
 {
 	double minRed=1.0, minGreen=1.0, minBlue=1.0;
 	int index;

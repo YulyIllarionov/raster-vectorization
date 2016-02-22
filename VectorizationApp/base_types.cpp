@@ -12,7 +12,7 @@ WPoint::~WPoint(void)
 {
 }
 
-WPoint::WPoint() : 
+WPoint::WPoint(void) : 
 x(-1),y(-1)
 {
 }
@@ -21,6 +21,24 @@ WPoint& WPoint::operator=(const WPoint& other)
 {
 	this->x=other.x;
 	this->y=other.y;
+}
+
+bool WPoint::operator==(const WPoint& other) //TODO возможно inline 
+{
+	if ((this->x==other.x)&&(this->y==other.y))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool WPoint::operator!=(const WPoint& other)
+{
+	if (*this==other)
+	{
+		return false;
+	}
+	return true;
 }
 
 WPoint::WPoint(int x_, int y_)
@@ -42,6 +60,15 @@ WPixel::WPixel(WColor color, int x_ = -1, int y_ = -1) :
 m_isInitialized(true)
 {
 
+}
+
+WLine::~WLine(void) 
+{
+}
+
+WLine::WLine(void) :
+m_width(-1)  
+{
 }
 
 bool WLine::RemovePoint(int idx)
@@ -67,5 +94,14 @@ void WLine::setWidth(double width)
 	m_width = width;
 }
 
+bool WLine::Concat(WLine line)
+{
+	if (this->getPoint(0)!=line.getPoint(0))
+	{
+		return false;
+	}
+	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
+	return true;
+}
 
 APP_END_NAMESPACE
