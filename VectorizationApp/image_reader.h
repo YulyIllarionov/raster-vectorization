@@ -8,8 +8,8 @@
 #pragma once
 
 
-#include "CImg.h"
-#include "dl_codes.h"
+#include "libs\CImg.h"
+#include "libs\dl_codes.h"
 #include "base_types.h"
 
 using namespace cimg_library;
