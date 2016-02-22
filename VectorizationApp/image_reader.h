@@ -31,9 +31,8 @@ public:
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
 
-    WPoint NeihborClockwise (WPoint point);
-    WPoint NeihborCounterClockwise (WPoint point);
-
+    int NeihborClockwise(WPoint& point);
+    int NeihborCounterClockwise(WPoint& point);
 
     void saveAsBMP(char *filename);
 

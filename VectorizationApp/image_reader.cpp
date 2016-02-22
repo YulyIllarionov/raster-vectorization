@@ -81,118 +81,120 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	return index;
 }
 
-WPoint WImageRaster::NeihborClockwise (WPoint point)
+int WImageRaster::NeihborCounterClockwise(WPoint& point)
 {
     int x_=point.x;
     int y_=point.y;
+    int number=0;
     WPoint neihbor;
     WColor color(image[y_][x_]);
     if (image[--y_][x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[y_][++x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[++y_][x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[++y_][x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[y_][--x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[y_][--x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[--y_][x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
     if (image[--y_][x_]==color)
     {
         neihbor.x=x_;
         neihbor.y=y_;
-        return neihbor;
+        number++;
     }
-    return neihbor;
+    return number;
 }
 
-WPoint WImageRaster::NeihborCounterClockwise(WPoint point)
+int WImageRaster::NeihborClockwise(WPoint& point)
 {
     int x_ = point.x;
     int y_ = point.y;
+    int number=0;
     WPoint neihbor;
     WColor color(image[y_][x_]);
     if (image[--y_][x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[y_][--x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[++y_][x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[++y_][x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[y_][++x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[y_][++x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[--y_][x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
     if (image[--y_][x_] == color)
     {
         neihbor.x = x_;
         neihbor.y = y_;
-        return neihbor;
+        number++;
     }
-    return neihbor;
+    return number;
 }
 
 void WImageRaster::saveAsBMP(char * filename)

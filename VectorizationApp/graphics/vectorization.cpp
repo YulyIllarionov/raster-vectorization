@@ -35,19 +35,22 @@ void Vectorization::onSkeleton()
 			{
                 WLine lineClockwise;
                 WPoint current(x,y);
+                WPoint previous;
                 while(!current.IsEmpty())
                 {
                     lineClockwise.AddPoint(current);
-                    m_imageRasterTemp->at(current)=WCOLOR_WHITE;
-                    current=m_imageRasterTemp->NeihborClockwise(current);
+                    previous = current;
+                    if(m_imageRasterTemp->NeihborClockwise(current)==1)
+                        m_imageRasterTemp->at(previous)=WCOLOR_WHITE;
                 }
                 WLine lineCounterClockwise;
                 current = WPoint(x,y);
                 while(!current.IsEmpty())
                 {
                     lineCounterClockwise.AddPoint(current);
-                    m_imageRasterTemp->at(current)=WCOLOR_WHITE;
-                    current=m_imageRasterTemp->NeihborCounterClockwise(current);
+                    previous = current;
+                    if(m_imageRasterTemp->NeihborCounterClockwise(current)==1)
+                        m_imageRasterTemp->at(previous)=WCOLOR_WHITE;
                 }
                 lineClockwise.Concat(lineCounterClockwise);
                 m_lines.push_back(lineClockwise);
