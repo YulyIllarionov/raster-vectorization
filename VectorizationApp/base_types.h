@@ -70,6 +70,8 @@ public:
   // line width
   void setWidth(double width);
   double getWidth() {return m_width; };
+  void setColor(WColor color) { m_color = color; };
+  WColor getColor() { return m_color; };
 
   // points
   void AddPoint(const WPoint& point) { m_points.push_back(point); };
@@ -87,6 +89,7 @@ private:
   double            m_width;
   WPointsContainer  m_points;
   int m_scaler;
+  WColor m_color;
 };
 
 

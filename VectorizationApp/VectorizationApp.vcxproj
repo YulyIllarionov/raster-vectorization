@@ -89,6 +89,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="util\math_utils.h" />
     <ClInclude Include="util\utils.h" />
+    <ClInclude Include="WDxfWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base_types.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="util\math_utils.cpp" />
     <ClCompile Include="util\utils.cpp" />
+    <ClCompile Include="WDxfWriter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

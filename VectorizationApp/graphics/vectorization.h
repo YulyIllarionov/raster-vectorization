@@ -10,6 +10,8 @@
 // for includes
 #include "..\app\app_const.h"
 #include "..\image_reader.h"
+#include "..\WDxfWriter.h"
+
 
 APP_BEGIN_NAMESPACE
 
@@ -20,11 +22,12 @@ public:
 	Vectorization (WImageRaster* m_imageRaster);
 	virtual ~Vectorization(); 
 	void onSkeleton();
-
+    void linesToFile(char *filename);
+    std::vector<WLine> m_lines;
 private:
 	WImageRaster* m_imageRaster;
 	WImageRaster* m_imageRasterTemp;
-	std::vector<WLine> m_lines;
+	//std::vector<WLine> m_lines;
 	
 };
 

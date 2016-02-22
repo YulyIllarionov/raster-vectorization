@@ -59,5 +59,16 @@ void Vectorization::onSkeleton()
 	}
 }
 
+void Vectorization::linesToFile(char *filename)
+{
+    WDxfWriter writer(filename);
+    writer.begin();
+    for (int i = 0;i < m_lines.size();i++)
+    {
+        writer.writePolyLine(m_lines.at(i));
+    }
+    writer.end();
+}
+
 
 APP_END_NAMESPACE

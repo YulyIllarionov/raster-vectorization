@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "WDxfWriter.h"
 
 
@@ -88,7 +88,7 @@ void WDxfWriter::end()
 
 void WDxfWriter::writePolyLine(WLine line)
 {
-    DL_Attributes attr("mainlayer", 7, line.getWidth()*100, "BYLAYER", 1.0);
+    DL_Attributes attr("mainlayer", line.getColor(), line.getWidth()*100, "BYLAYER", 1.0);
     int num_points = line.Lenght() % line.getScaler() == 0 ? (line.Lenght() / line.getScaler()): (line.Lenght() / line.getScaler() + 1);
     dxf.writePolyline(*dw, DL_PolylineData(num_points, 0, 0, 0), attr);
     
