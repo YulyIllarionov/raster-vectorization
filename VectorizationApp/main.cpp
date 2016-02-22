@@ -6,7 +6,8 @@
 #include "stdafx.h"
 #include "app\app_const.h"
 #include "image_reader.h"
-using namespace white_app;
+
+APP_BEGIN_NAMESPACE
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -15,3 +16,5 @@ int _tmain(int argc, _TCHAR* argv[])
 
     return 0;
 }
+
+APP_END_NAMESPACE
