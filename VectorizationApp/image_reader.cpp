@@ -1,7 +1,12 @@
+/// Whiteteam
+/// \file image_reader.cpp
+/// \brief This file contains image reader
+/// \author Whiteteam authors
 
 #include "stdafx.h"
 #include "image_reader.h"
 
+APP_BEGIN_NAMESPACE
 
 
 WImageRaster::~WImageRaster()
@@ -74,3 +79,6 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	}
 	return index;
 }
+
+
+APP_END_NAMESPACE

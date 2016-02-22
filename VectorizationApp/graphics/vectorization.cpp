@@ -14,24 +14,24 @@ Vectorization::~Vectorization ()
 {
 }
 
-Vectorization::Vectorization ():
-imageRaster(NULL), imageRasterTemp(NULL) //TODO не уверен в NULL, инициализация lines
+Vectorization::Vectorization() :
+  imageRaster(NULL), imageRasterTemp(NULL) //TODO не уверен в NULL, инициализация lines
 {
 }
 
-Vectorization::Vectorization (WImageRaster* image):
-imageRaster(image), imageRasterTemp(image)
+Vectorization::Vectorization(WImageRaster* image) :
+  imageRaster(image), imageRasterTemp(image)
 {
 
 }
 
 void Vectorization::onSkeleton()
 {
-	for (int x=0; x<imageRasterTemp.getWidth(); x++)
+	for (int x = 0; x < imageRasterTemp.getWidth(); x++)
 	{
-		for (int y=0; y<imageRasterTemp.getHeight(); y++)
+		for (int y = 0; y < imageRasterTemp.getHeight(); y++)
 		{
-			if(imageRasterTemp.at(x,y)!=WCOLOR_WHITE)
+			if(imageRasterTemp.at(x,y) != WCOLOR_WHITE)
 			{
 
 			}

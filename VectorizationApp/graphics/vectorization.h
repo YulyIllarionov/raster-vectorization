@@ -9,6 +9,7 @@
 
 // for includes
 #include "..\app\app_const.h"
+#include "..\image_reader.h"
 
 APP_BEGIN_NAMESPACE
 

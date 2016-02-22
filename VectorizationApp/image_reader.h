@@ -1,12 +1,21 @@
+/// Whiteteam
+/// \file image_reader.h
+/// \brief This file contains image reader
+/// \author Whiteteam authors
+
+#ifndef _VECTORIZATION_APP_IMAGE_READER_H_
+#define _VECTORIZATION_APP_IMAGE_READER_H_
 #pragma once
+
+
 #include "CImg.h"
 #include "dl_codes.h"
 #include "base_types.h"
 
 using namespace cimg_library;
 using namespace std;
-using namespace white_app;
 
+APP_BEGIN_NAMESPACE
 
 class WImageRaster
 {
@@ -28,3 +37,7 @@ private:
 	string filename;
 };
 
+
+APP_END_NAMESPACE
+
+#endif // _VECTORIZATION_APP_IMAGE_READER_H_

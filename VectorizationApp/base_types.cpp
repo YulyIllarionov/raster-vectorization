@@ -13,29 +13,31 @@ WPoint::~WPoint(void)
 }
 
 WPoint::WPoint(void) : 
-x(-1),y(-1)
+  x(-1),y(-1)
 {
 }
 
 WPoint::WPoint(int x_, int y_)
 {
-	x=x_;
-	y=y_;
+	x = x_;
+	y = y_;
 }
 
 WPoint& WPoint::operator=(const WPoint& other)
 {
 	this->x=other.x;
 	this->y=other.y;
+  return *this;
 }
 
 bool WPoint::operator==(const WPoint& other) //TODO возможно inline 
 {
-	if ((this->x==other.x)&&(this->y==other.y))
+  return (this->x == other.x) && (this->y == other.y);
+	/*if ((this->x==other.x)&&(this->y==other.y))
 	{
 		return true;
 	}
-	return false;
+	return false;*/
 }
 
 bool WPoint::operator!=(const WPoint& other)
@@ -52,27 +54,28 @@ WPixel::~WPixel(void)
 }
 
 WPixel::WPixel() :
-WPoint(), m_color(WCOLOR_WHITE /*TODO: init by palette color default */), m_isInitialized(true)
+  WPoint(), m_color(WCOLOR_WHITE /*TODO: init by palette color default */), 
+  m_isInitialized(true)
 {
 
 }
 
-WPixel::WPixel(WColor color, int x_ = -1, int y_ = -1) :
-WPoint (x_, y_), m_color(color), m_isInitialized(true)
+WPixel::WPixel(WColor color, int x_, int y_) :
+  WPoint (x_, y_), m_color(color), m_isInitialized(true)
 {
 
 }
 
 WLine::WLine(void) :
-m_scaler(1), m_width(-1)  
+  m_scaler(1), m_width(-1)  
 {
 }
 
 bool WLine::RemovePoint(int idx)
 {
-	if ((m_points.size() > idx)&&(!m_points.empty()))
+	if ((m_pixels.size() > idx) && (!m_pixels.empty()))
 	{
-		m_points.erase(m_points.begin()+idx,m_points.begin()+idx);
+		m_pixels.erase(m_pixels.begin() + idx, m_pixels.begin() + idx);
 		return true;
 	}
 	return false;
@@ -80,9 +83,9 @@ bool WLine::RemovePoint(int idx)
 
 bool WLine::AddPointAt(const WPixel& point, int idx)
 {
-	if (m_points.size() < idx)
+	if (m_pixels.size() < idx)
 		return false;
-	m_points.insert(m_points.begin()+idx, point);
+	m_pixels.insert(m_pixels.begin() + idx, point);
 	return true;
 } 
 
@@ -93,17 +96,17 @@ void WLine::setWidth(double width)
 
 void WLine::setScaler(int scaler)
 {
-	m_scaler=scaler;
+	m_scaler = scaler;
 }
 
 
 bool WLine::Concat(WLine line)
 {
-	if (this->getPoint(0)!=line.getPoint(0))
+	if (this->getPixel(0) != line.getPixel(0))
 	{
 		return false;
 	}
-	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
+	this->m_pixels.insert( this->m_pixels.begin(), line.getPixels().begin(), line.getPixels().end() );
 	return true;
 }
 
