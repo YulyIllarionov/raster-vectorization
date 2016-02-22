@@ -10,7 +10,7 @@ using namespace white_app;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    WImageRaster image("C:\\temp.bmp");
+    WImageRaster image("test vector.bmp");
     image.saveAsBMP("temp2.bmp");
 
     return 0;
