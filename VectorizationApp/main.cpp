@@ -4,10 +4,14 @@
 /// \author Whiteteam authors
 
 #include "stdafx.h"
-
+#include "app\app_const.h"
+#include "image_reader.h"
+using namespace white_app;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	return 0;
-}
+    WImageRaster image("test vector.bmp");
+    image.saveAsBMP("temp2.bmp");
 
+    return 0;
+}

@@ -17,14 +17,14 @@ class Vectorization
 {
 public:
 	Vectorization ();
-	Vectorization (WImageRaster* imageRaster);
+	Vectorization (WImageRaster* m_imageRaster);
 	virtual ~Vectorization(); 
 	void onSkeleton();
 
 private:
-	WImageRaster* imageRaster;
-	WImageRaster* imageRasterTemp;
-	std::vector<WLine> lines;
+	WImageRaster* m_imageRaster;
+	WImageRaster* m_imageRasterTemp;
+	std::vector<WLine> m_lines;
 	
 };
 

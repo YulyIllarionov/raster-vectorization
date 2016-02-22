@@ -77,19 +77,19 @@ WLine::~WLine()
 
 bool WLine::RemovePoint(int idx)
 {
-	if ((m_pixels.size() > idx) && (!m_pixels.empty()))
+	if ((m_points.size() > idx) && (!m_points.empty()))
 	{
-		m_pixels.erase(m_pixels.begin() + idx, m_pixels.begin() + idx);
+		m_points.erase(m_points.begin() + idx, m_points.begin() + idx);
 		return true;
 	}
 	return false;
 }
 
-bool WLine::AddPointAt(const WPixel& point, int idx)
+bool WLine::AddPointAt(const WPoint& point, int idx)
 {
-	if (m_pixels.size() < idx)
+	if (m_points.size() < idx)
 		return false;
-	m_pixels.insert(m_pixels.begin() + idx, point);
+	m_points.insert(m_points.begin() + idx, point);
 	return true;
 } 
 
@@ -106,11 +106,12 @@ void WLine::setScaler(int scaler)
 
 bool WLine::Concat(WLine line)
 {
-	if (this->getPixel(0) != line.getPixel(0))
+	if (this->getPoint(0) != line.getPoint(0))
 	{
 		return false;
 	}
-	this->m_pixels.insert( this->m_pixels.begin(), line.getPixels().begin(), line.getPixels().end() );
+    line.RemovePoint(0);
+	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
 	return true;
 }
 
