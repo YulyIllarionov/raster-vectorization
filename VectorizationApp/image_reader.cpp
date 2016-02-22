@@ -83,5 +83,119 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	return index;
 }
 
+WPoint WImageRaster::NeihborClockwise (WPoint point)
+{
+    int x_=point.x;
+    int y_=point.y;
+    WPoint neihbor;
+    WColor color(image[y_][x_]);
+    if (image[--y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[y_][++x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[++y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[++y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[y_][--x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[y_][--x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[--y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[--y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    return neihbor;
+}
+
+WPoint WImageRaster::NeihborCounterClockwise (WPoint point)
+{
+    int x_=point.x;
+    int y_=point.y;
+    WPoint neihbor;
+    WColor color(image[y_][x_]);
+    if (image[--y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[y_][--x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[++y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[++y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[y_][++x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[y_][++x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[--y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    if (image[--y_][x_]==color)
+    {
+        neihbor.x=x_;
+        neihbor.y=y_;
+        return neihbor;
+    }
+    return neihbor;
+}
+
 
 APP_END_NAMESPACE

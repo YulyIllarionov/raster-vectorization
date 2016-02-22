@@ -30,6 +30,10 @@ public:
 	int getWidth() { return width; };
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
+
+    WPoint NeihborClockwise (WPoint point);
+    WPoint NeihborCounterClockwise (WPoint point);
+
 private:
 	WColor **image;
 	int width;
