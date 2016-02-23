@@ -7,8 +7,8 @@
 #define _VECTORIZATION_APP_SKELETONIZATION_H_
 #pragma once
 
-#include "..\app\app_const.h"
-#include "..\image_reader.h"
+#include "app\app_const.h"
+#include "image_reader.h"
 #include "base_types.h"
 #include <vector>
 

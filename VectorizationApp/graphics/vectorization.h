@@ -8,9 +8,9 @@
 #pragma once
 
 // for includes
-#include "..\app\app_const.h"
-#include "..\image_reader.h"
-#include "..\WDxfWriter.h"
+#include "app\app_const.h"
+#include "image_reader.h"
+#include "WDxfWriter.h"
 
 
 APP_BEGIN_NAMESPACE
