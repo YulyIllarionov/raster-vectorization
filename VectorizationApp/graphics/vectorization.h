@@ -22,7 +22,7 @@ public:
 	Vectorization (WImageRaster* m_imageRaster);
 	virtual ~Vectorization(); 
 	void onSkeleton();
-    void linesToFile(char *filename);
+    void linesToFile(const char *filename);
     void calcLinesWidth();
     // experimental
     void setScaleForAllLines(int scale);

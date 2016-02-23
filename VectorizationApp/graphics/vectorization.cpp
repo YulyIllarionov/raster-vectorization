@@ -134,7 +134,7 @@ void Vectorization::onSkeleton()
 	}
 }
 
-void Vectorization::linesToFile(char *filename)
+void Vectorization::linesToFile(const char *filename)
 {
     WDxfWriter writer(filename);
     writer.begin();
