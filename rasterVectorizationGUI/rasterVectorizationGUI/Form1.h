@@ -8,6 +8,7 @@ namespace rasterVectorizationGUI {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+    using namespace System::Runtime::InteropServices;
 
 	/// <summary>
 	/// Summary for Form1
@@ -43,6 +44,7 @@ namespace rasterVectorizationGUI {
     private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
 
     private: System::Windows::Forms::Button^  searchButton;
+
     private: System::ComponentModel::IContainer^  components;
 
 
@@ -141,9 +143,19 @@ namespace rasterVectorizationGUI {
     
     //User variables
     private: 
-        Bitmap^ rasterImage;
+        Image^ rasterImageForDraw;
+        Image^ rasterImageForDrawTemp;
         array<TrackBar ^> ^ linesParams;
+        //WImageRaster* rasterImageForVector;
         int size;
+
+    private: void drawPointsToVector(void)
+             {
+                 rasterImageForDrawTemp = (Image^)rasterImageForDraw->Clone();
+                 Graphics^ graphics = Graphics::FromImage(rasterImageForDrawTemp);
+                 graphics->FillEllipse(gcnew SolidBrush(Color::Red), 50, 50, 20, 20);
+                 rasterImageBox->Image = rasterImageForDrawTemp;
+             }
 
     private: System::Void loadButton_Click(System::Object^  sender, System::EventArgs^  e) 
              {
@@ -151,8 +163,10 @@ namespace rasterVectorizationGUI {
                  {
                      if ( openFileDialog->FileName != String::Empty)
                      {
-                         rasterImage = gcnew Bitmap( openFileDialog->FileName );
-                         rasterImageBox->Image = dynamic_cast<Image^>(rasterImage);
+                         rasterImageForDraw = Image::FromFile( openFileDialog->FileName );
+                         rasterImageBox->Image = rasterImageForDraw; //dynamic_cast<Image^>(rasterImageForDraw);
+                         IntPtr ptrToFileName = Marshal::StringToHGlobalAnsi(openFileDialog->FileName);
+                         char* fileName = static_cast<char*>(ptrToFileName.ToPointer());
                      }
                  }
              }
@@ -165,6 +179,10 @@ namespace rasterVectorizationGUI {
                 for (int i=0; i<size; i++)
                 {
                     linesParams[i] = gcnew TrackBar();
+
+                    //linesParams[i] = 
+                    linesParams[i]->ValueChanged += gcnew System::EventHandler(this, &Form1::trackBar_ValueChanged);
+                    
                     linesParams[i]->Width = loadButton->Width;
                     linesParams[i]->Height = loadButton->Height;
                     linesParams[i]->Left = loadButton->Left;
@@ -176,10 +194,19 @@ namespace rasterVectorizationGUI {
                 }
 
             }
-private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) 
+         {
          }
-private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
+private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
+         {
              size = 0;
+         }
+private: System::Void trackBar_ValueChanged(System::Object^  sender, System::EventArgs^  e)
+         {
+             TrackBar ^ changedTrackBar = (TrackBar ^)sender;
+             int index = Array::IndexOf( linesParams, changedTrackBar);
+             if (index == 2)
+                 drawPointsToVector();
          }
 };
 }
