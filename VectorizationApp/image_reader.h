@@ -33,7 +33,7 @@ public:
 
     WPointsContainer NeihborsClockwise(WPoint point);
 
-  void saveAsBMP(char *filename);
+  void saveAsBMP(const char *filename);
 
 private:
 	WColor **image;

@@ -11,13 +11,15 @@
 
 using namespace APP_NAMESPACE;
 
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, char* argv[])
 {
-  WImageRaster image("test vector.bmp");
+  std::cout << " [input name = test_vector.bmp] [output name = out]" << std::endl;
+
+  WImageRaster image("test_vector.bmp");
     
   bool result = WSkeletonizer::Instance().Skeletonize(image, image);
 
-  image.saveAsBMP("temp2.bmp");
+  image.saveAsBMP("out.bmp");
 
   Vectorization vectorization(&image);
 

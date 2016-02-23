@@ -9,7 +9,7 @@ APP_BEGIN_NAMESPACE
 class WDxfWriter
 {
 public:
-    WDxfWriter(char *filename);
+    WDxfWriter(const char *filename);
     ~WDxfWriter();
     void begin();
     void end();

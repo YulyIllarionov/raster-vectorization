@@ -3,7 +3,7 @@
 
 
 APP_BEGIN_NAMESPACE
-WDxfWriter::WDxfWriter(char *filename)
+WDxfWriter::WDxfWriter(const char *filename)
 {
     this->filename = filename;
     dw = dxf.out(filename, DL_Codes::AC1015);

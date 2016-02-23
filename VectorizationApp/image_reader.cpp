@@ -123,7 +123,7 @@ WPointsContainer WImageRaster::NeihborsClockwise(WPoint point)
     return neighbors;
 }
 
-void WImageRaster::saveAsBMP(char * filename)
+void WImageRaster::saveAsBMP(const char * filename)
 {
     CImg<unsigned char> imageBMP(width, height, 1, 1, 0);
 
