@@ -23,7 +23,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   vectorization.onSkeleton();
 
-  vectorization.linesToFile("out,dxf");
+  vectorization.linesToFile("out.dxf");
 
   return 0;
 }

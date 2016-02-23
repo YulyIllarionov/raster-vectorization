@@ -84,6 +84,7 @@ void WDxfWriter::end()
     dw->dxfEOF();
     dw->close();
     delete dw;
+    dw = NULL;
 }
 
 void WDxfWriter::writePolyLine(WLine line)
