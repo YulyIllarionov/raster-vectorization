@@ -136,6 +136,7 @@ int WImageRaster::NeihborCounterClockwise(WPoint& point)
         neihbor.y=y_;
         number++;
     }
+    point = neihbor;
     return number;
 }
 
@@ -194,6 +195,7 @@ int WImageRaster::NeihborClockwise(WPoint& point)
         neihbor.y = y_;
         number++;
     }
+    point = neihbor;
     return number;
 }
 

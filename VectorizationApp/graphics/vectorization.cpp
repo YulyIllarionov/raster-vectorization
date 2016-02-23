@@ -36,6 +36,8 @@ void Vectorization::onSkeleton()
         WLine lineClockwise;
         WPoint current(x,y);
         WPoint previous;
+        lineClockwise.AddPoint(current);
+        m_imageRasterTemp->NeihborClockwise(current);
         while(!current.IsEmpty())
         {
           lineClockwise.AddPoint(current);

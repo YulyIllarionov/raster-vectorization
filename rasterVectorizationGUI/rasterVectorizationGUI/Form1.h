@@ -44,6 +44,7 @@ namespace rasterVectorizationGUI {
     private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
 
     private: System::Windows::Forms::Button^  searchButton;
+    private: System::Windows::Forms::Label^  label1;
 
     private: System::ComponentModel::IContainer^  components;
 
@@ -66,6 +67,7 @@ namespace rasterVectorizationGUI {
             this->saveButton = (gcnew System::Windows::Forms::Button());
             this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
             this->searchButton = (gcnew System::Windows::Forms::Button());
+            this->label1 = (gcnew System::Windows::Forms::Label());
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rasterImageBox))->BeginInit();
             this->SuspendLayout();
             // 
@@ -76,7 +78,7 @@ namespace rasterVectorizationGUI {
                 | System::Windows::Forms::AnchorStyles::Right));
             this->rasterImageBox->Location = System::Drawing::Point(12, 12);
             this->rasterImageBox->Name = L"rasterImageBox";
-            this->rasterImageBox->Size = System::Drawing::Size(410, 316);
+            this->rasterImageBox->Size = System::Drawing::Size(337, 316);
             this->rasterImageBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->rasterImageBox->TabIndex = 0;
             this->rasterImageBox->TabStop = false;
@@ -121,11 +123,22 @@ namespace rasterVectorizationGUI {
             this->searchButton->UseVisualStyleBackColor = true;
             this->searchButton->Click += gcnew System::EventHandler(this, &Form1::searchButton_Click);
             // 
+            // label1
+            // 
+            this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+            this->label1->AutoSize = true;
+            this->label1->Location = System::Drawing::Point(381, 306);
+            this->label1->Name = L"label1";
+            this->label1->Size = System::Drawing::Size(35, 13);
+            this->label1->TabIndex = 4;
+            this->label1->Text = L"label1";
+            // 
             // Form1
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->ClientSize = System::Drawing::Size(560, 336);
+            this->Controls->Add(this->label1);
             this->Controls->Add(this->searchButton);
             this->Controls->Add(this->saveButton);
             this->Controls->Add(this->loadButton);
@@ -136,6 +149,7 @@ namespace rasterVectorizationGUI {
             this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rasterImageBox))->EndInit();
             this->ResumeLayout(false);
+            this->PerformLayout();
 
         }
 #pragma endregion
@@ -148,6 +162,7 @@ namespace rasterVectorizationGUI {
         array<TrackBar ^> ^ linesParams;
         //WImageRaster* rasterImageForVector;
         int size;
+        int index;
 
     private: void drawPointsToVector(void)
              {
@@ -179,7 +194,7 @@ namespace rasterVectorizationGUI {
                 for (int i=0; i<size; i++)
                 {
                     linesParams[i] = gcnew TrackBar();
-
+                    linesParams[i]->Name = System::Convert::ToString(i);
                     //linesParams[i] = 
                     linesParams[i]->ValueChanged += gcnew System::EventHandler(this, &Form1::trackBar_ValueChanged);
                     
@@ -194,20 +209,21 @@ namespace rasterVectorizationGUI {
                 }
 
             }
-private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) 
-         {
-         }
-private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
-         {
-             size = 0;
-         }
-private: System::Void trackBar_ValueChanged(System::Object^  sender, System::EventArgs^  e)
-         {
-             TrackBar ^ changedTrackBar = (TrackBar ^)sender;
-             int index = Array::IndexOf( linesParams, changedTrackBar);
-             if (index == 2)
-                 drawPointsToVector();
-         }
+    private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) 
+             {
+             }
+    private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
+             {
+                 size = 0;
+             }
+    private: System::Void trackBar_ValueChanged(System::Object^  sender, System::EventArgs^  e)
+             {
+                 TrackBar ^ changedTrackBar = (TrackBar ^)sender;
+                 index = Array::IndexOf( linesParams, changedTrackBar);
+                 label1->Text = System::Convert::ToString(index);
+                 //if (index == 2)
+                     //drawPointsToVector();
+             }
 };
 }
 

@@ -110,7 +110,7 @@ bool WLine::Concat(WLine line)
 	{
 		return false;
 	}
-    line.RemovePoint(0);
+    //line.RemovePoint(0);
 	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
 	return true;
 }
