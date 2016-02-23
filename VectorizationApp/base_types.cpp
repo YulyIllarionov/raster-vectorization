@@ -27,7 +27,12 @@ WPoint& WPoint::operator=(const WPoint& other)
 {
 	this->x=other.x;
 	this->y=other.y;
-  return *this;
+    return *this;
+}
+
+void WLine::clearPoints()
+{
+    this->m_points.clear();
 }
 
 bool WPoint::operator==(const WPoint& other) //TODO возможно inline 
@@ -70,9 +75,20 @@ WLine::WLine(void) :
   m_scaler(1), m_width(-1)  
 {
 }
+
 WLine::~WLine()
 {
 
+}
+
+WLine& WLine::operator=(WLine other)
+{
+    this->m_points = other.m_points;
+    this->m_color = other.m_color;
+    this->m_width = other.m_width;
+    this->m_scaler = other.m_scaler;
+
+    return *this;
 }
 
 bool WLine::RemovePoint(size_t idx)
@@ -104,7 +120,7 @@ void WLine::setScaler(int scaler)
 }
 
 
-bool WLine::Concat(WLine line)
+bool WLine::concat(WLine line)
 {
 	if (this->getPoint(0) != line.getPoint(0))
 	{

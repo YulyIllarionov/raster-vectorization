@@ -81,122 +81,46 @@ int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна заме
 	return index;
 }
 
-int WImageRaster::NeihborCounterClockwise(WPoint& point)
-{
-    int x_=point.x;
-    int y_=point.y;
-    int number=0;
-    WPoint neihbor;
-    WColor color(image[y_][x_]);
-    if (image[--y_][x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[y_][++x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[++y_][x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[++y_][x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[y_][--x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[y_][--x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[--y_][x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    if (image[--y_][x_]==color)
-    {
-        neihbor.x=x_;
-        neihbor.y=y_;
-        number++;
-    }
-    point = neihbor;
-    return number;
-}
 
-int WImageRaster::NeihborClockwise(WPoint& point)
+WPointsContainer WImageRaster::NeihborsClockwise(WPoint point)
 {
+    WPointsContainer neighbors;
     int x_ = point.x;
     int y_ = point.y;
-    int number=0;
-    WPoint neihbor;
     WColor color(image[y_][x_]);
     if (image[--y_][x_] == color)
     {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
+        neighbors.push_back(WPoint(x_,y_));
+    }
+    if (image[y_][++x_] == color)
+    {
+        neighbors.push_back(WPoint(x_,y_));
+    }
+    if (image[++y_][x_] == color)
+    {
+        neighbors.push_back(WPoint(x_,y_));
+    }
+    if (image[++y_][x_] == color)
+    {
+        neighbors.push_back(WPoint(x_,y_));
     }
     if (image[y_][--x_] == color)
     {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
+        neighbors.push_back(WPoint(x_,y_));
     }
-    if (image[++y_][x_] == color)
+    if (image[y_][--x_] == color)
     {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
-    }
-    if (image[++y_][x_] == color)
-    {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
-    }
-    if (image[y_][++x_] == color)
-    {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
-    }
-    if (image[y_][++x_] == color)
-    {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
+        neighbors.push_back(WPoint(x_,y_));
     }
     if (image[--y_][x_] == color)
     {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
+        neighbors.push_back(WPoint(x_,y_));
     }
     if (image[--y_][x_] == color)
     {
-        neihbor.x = x_;
-        neihbor.y = y_;
-        number++;
+        neighbors.push_back(WPoint(x_,y_));
     }
-    point = neihbor;
-    return number;
+    return neighbors;
 }
 
 void WImageRaster::saveAsBMP(char * filename)

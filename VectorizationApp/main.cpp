@@ -13,9 +13,11 @@ using namespace APP_NAMESPACE;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-  WImageRaster image("test vector.bmp");
+  WImageRaster image("cross.bmp");
     
   bool result = WSkeletonizer::Instance().Skeletonize(image, image);
+
+  image.saveAsBMP("temp2.bmp");
 
   Vectorization vectorization(&image);
 
@@ -23,6 +25,5 @@ int _tmain(int argc, _TCHAR* argv[])
 
   vectorization.linesToFile("out,dxf");
 
-  image.saveAsBMP("temp2.bmp");
   return 0;
 }
