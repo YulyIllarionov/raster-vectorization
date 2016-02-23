@@ -51,7 +51,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;WINOSINTERUPTSDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;WVECTORIZEDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -85,7 +85,7 @@
     <ClInclude Include="graphics\skeletonization.h" />
     <ClInclude Include="graphics\vectorization.h" />
     <ClInclude Include="image_reader.h" />
-	<ClInclude Include="libs\dl_attributes.h" />
+    <ClInclude Include="libs\dl_attributes.h" />
     <ClInclude Include="libs\dl_codes.h" />
     <ClInclude Include="libs\dl_creationadapter.h" />
     <ClInclude Include="libs\dl_dxf.h" />
@@ -115,7 +115,7 @@
     <ClCompile Include="graphics\skeletonization.cpp" />
     <ClCompile Include="graphics\vectorization.cpp" />
     <ClCompile Include="image_reader.cpp" />
-	<ClCompile Include="libs\dl_dxf.cpp" />
+    <ClCompile Include="libs\dl_dxf.cpp" />
     <ClCompile Include="libs\dl_writer_ascii.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

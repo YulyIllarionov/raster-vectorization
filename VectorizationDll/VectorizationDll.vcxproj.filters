@@ -28,7 +28,7 @@
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{df270900-6a9d-4b9e-bc56-408605d33bdc}</UniqueIdentifier>
     </Filter>
-	<Filter Include="Header Files\libs">
+    <Filter Include="Header Files\libs">
       <UniqueIdentifier>{b69d0806-124f-4066-84df-bbcc13d2db22}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\libs">
@@ -75,6 +75,36 @@
     <ClInclude Include="WDxfWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="libs\dl_attributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_codes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_creationadapter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_dxf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_entities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_extrusion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_writer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\dl_writer_ascii.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -105,6 +135,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WDxfWriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\dl_dxf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\dl_writer_ascii.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

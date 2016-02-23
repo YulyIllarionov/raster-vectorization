@@ -7,8 +7,7 @@
 
 APP_BEGIN_NAMESPACE
 
-
-bool Vectorizer::Vectorize(std::string in, std::string out)
+WVECTORIZEDLL bool Vectorize(std::string in, std::string out)
 {
   return true;
 }

@@ -7,17 +7,11 @@
 #endif
 
 #include "app\app_const.h"
-
 #include <vector>
+
 
 APP_BEGIN_NAMESPACE
 
-class Vectorizer
-{
-public:
-  static WVECTORIZEDLL bool Vectorize(std::string in, std::string out);
-
-private:
-};
+WVECTORIZEDLL bool Vectorize(std::string in, std::string out);
 
 APP_END_NAMESPACE
