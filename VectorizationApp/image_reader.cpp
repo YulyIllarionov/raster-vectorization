@@ -11,7 +11,7 @@ APP_BEGIN_NAMESPACE
 
 WImageRaster::~WImageRaster()
 {
-	for (int i = 0; i<width; i++)
+	for (int i = 0; i<height; i++)
 	{
 		delete[] image[i];
 	}
