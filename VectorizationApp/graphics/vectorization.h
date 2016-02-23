@@ -23,7 +23,10 @@ public:
 	virtual ~Vectorization(); 
 	void onSkeleton();
     void linesToFile(char *filename);
+    void calcLinesWidth();
+
 private:
+    int helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3);
 	WImageRaster* m_imageRaster;
 	WImageRaster* m_imageRasterTemp;
 	std::vector<WLine> m_lines;
