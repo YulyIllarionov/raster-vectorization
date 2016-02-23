@@ -66,7 +66,7 @@ void WSkeletonizer::InitializeTemplates()
     SRow row1, row2, row3;
     row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Foreground);
     row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Foreground);
-    row3.push_back(Y);        row3.push_back(Background); row3.push_back(Y);
+    row3.push_back(Y);          row3.push_back(Background); row3.push_back(Y);
 
     _template.m_points.push_back(row1);
     _template.m_points.push_back(row2);
