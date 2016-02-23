@@ -138,7 +138,7 @@ void Vectorization::linesToFile(char *filename)
     writer.begin();
     for (int i = 0;i < m_lines.size();i++)
     {
-        writer.writePolyLine(m_lines.at(i));
+        writer.writePolyLine(m_lines.at(i), m_imageRaster->getHeight());
     }
     writer.end();
 }

@@ -13,7 +13,7 @@ public:
     ~WDxfWriter();
     void begin();
     void end();
-    void writePolyLine(WLine line);
+    void writePolyLine(WLine line, int height);
     DL_Dxf dxf;
     DL_WriterA* dw;
 private:
