@@ -126,6 +126,7 @@ void Vectorization::onSkeleton()
                         currentLine.concat(fullLine);
                     }
                 }
+                fullLine.setColor(color);
                 this->m_lines.push_back(fullLine);
             }
 		}
