@@ -114,28 +114,35 @@ void Vectorization::calcLinesWidth()
 int Vectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3)
 {
     int n = 0;
-    int width = 1;
-    if ((int)kperpend == INT_MAX)
+    int widthline = 1;
+    int image_height = m_imageRaster->getHeight();
+    int image_width = m_imageRaster->getWidth();
+    WColor **image = m_imageRaster->getImagePtr();
+    int temp_y;
+    int temp_x;
+    if (abs(kperpend) > 1.0)
     {
-        int temp_y = y3;
+        temp_y = y3;
         while (true)
         {
+            temp_y--;
             if (temp_y != 0)
             {
-                temp_y--;
-                if (m_imageRaster->getImagePtr()[temp_y][x3] != 255) width++;
+                temp_x = (temp_y-bperpend)/kperpend;
+
+                if (temp_x>0&&temp_x<image_width&&image[temp_y][temp_x] != 255) widthline++;
                 else break;
             }
             else break;
-            
         }
         temp_y = y3;
         while (true)
         {
-            if (temp_y != m_imageRaster->getHeight())
-            {
-                temp_y++;
-                if (m_imageRaster->getImagePtr()[temp_y][x3] != 255) width++;
+            temp_y++;
+            if (temp_y < image_height)
+            { 
+                temp_x = (temp_y - bperpend) / kperpend;
+                if (temp_x>0 && temp_x<image_width&&image[temp_y][temp_x] != 255) widthline++;
                 else break;
             }
             else break;
@@ -143,35 +150,35 @@ int Vectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x
     }
     else
     {
-        int temp_y = y3;
-        int temp_x = x3;
+        temp_x = x3;
         while (true)
         {
+            temp_x--;
             if (temp_x != 0)
             {
-                temp_x--;
                 temp_y = kperpend*temp_x + bperpend;
-                if (m_imageRaster->getImagePtr()[temp_y][temp_x] != 255) width++;
+                
+                if (temp_y>0 && temp_y<image_height&&image[temp_y][temp_x] != 255) widthline++;
                 else break;
             }
             else break;
         }
-        temp_y = y3;
+
         temp_x = x3;
         while (true)
         {
-            if (temp_y != m_imageRaster->getWidth())
+            temp_x++;
+            if (temp_x< image_width)
             {
-                temp_x++;
                 temp_y = kperpend*temp_x + bperpend;
-                if (m_imageRaster->getImagePtr()[temp_y][x3] != 255) width++;
+                if (temp_y>0 && temp_y<image_height&&image[temp_y][temp_x] != 255) widthline++;
                 else break;
             }
             else break;
         }
     }
 
-    return width;
+    return widthline;
 
 }
 
