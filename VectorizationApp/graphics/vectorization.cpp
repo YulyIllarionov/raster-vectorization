@@ -127,6 +127,7 @@ void Vectorization::onSkeleton()
                     }
                 }
                 fullLine.setColor(color);
+                fullLine.setScaler(10);
                 this->m_lines.push_back(fullLine);
             }
 		}
