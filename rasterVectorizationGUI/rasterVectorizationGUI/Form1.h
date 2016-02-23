@@ -1,5 +1,7 @@
 #pragma once
 
+#include "VectorizationDll.h"
+
 namespace rasterVectorizationGUI {
 
 	using namespace System;
@@ -22,6 +24,8 @@ namespace rasterVectorizationGUI {
 			//
 			//TODO: Add the constructor code here
 			//
+
+      //APP_NAMESPACE::Vectorizer::Vectorize("in_file", "out_file");
 		}
 
 	protected:
