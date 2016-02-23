@@ -15,7 +15,7 @@ Vectorization::~Vectorization ()
 }
 
 Vectorization::Vectorization() :
-  m_imageRaster(NULL), m_imageRasterTemp(NULL) //TODO не уверен в NULL, инициализация m_lines
+  m_imageRaster(NULL), m_imageRasterTemp(NULL) 
 {
 }
 
@@ -127,7 +127,7 @@ void Vectorization::onSkeleton()
                     }
                     else
                     {
-                        currentLine.concat(fullLine);
+                        fullLine.concat(currentLine);
                     }
                 }
                 fullLine.setColor(color);
@@ -167,7 +167,7 @@ void Vectorization::calcLinesWidth()
                 y2= m_lines.at(j).getPoint(i).y;
                 double k;
                 if ((x2 - x1) == 0) k = INT_MAX;
-                else k = (double)(y2 - y1) / (x2 - x1);
+                else k = (double)(y2 - y1) / (double)(x2 - x1);
 
                 int x3 = (x2 + x1) / 2;
                 int y3 = (y2 + y1) / 2;
@@ -183,11 +183,19 @@ void Vectorization::calcLinesWidth()
                 y1 = y2;
             }
         }
-        // здесь бы добавить еще пару строк, но это посмотрим (если не кратно scaler, то последняя точка не будет считаться)
-        m_lines.at(j).setScaler(temp_width / n);
+        if(n==0) m_lines.at(j).setWidth(1);
+        else m_lines.at(j).setWidth(temp_width / n);
     }
 
 
+}
+
+void Vectorization::setScaleForAllLines(int scale)
+{
+    for (int i = 0;i < m_lines.size();i++)
+    {
+        m_lines.at(i).setScaler(scale);
+    }
 }
 
 int Vectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3)

@@ -22,6 +22,8 @@ int _tmain(int argc, _TCHAR* argv[])
   Vectorization vectorization(&image);
 
   vectorization.onSkeleton();
+  vectorization.setScaleForAllLines(5);
+  //vectorization.calcLinesWidth();
 
   vectorization.linesToFile("out.dxf");
 

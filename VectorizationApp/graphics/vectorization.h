@@ -24,7 +24,8 @@ public:
 	void onSkeleton();
     void linesToFile(char *filename);
     void calcLinesWidth();
-
+    // experimental
+    void setScaleForAllLines(int scale);
 private:
     int helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3);
 	WImageRaster* m_imageRaster;

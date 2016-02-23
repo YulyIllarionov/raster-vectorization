@@ -83,7 +83,7 @@ public:
   bool RemovePoint(size_t idx);
   int Lenght(){ return m_points.size(); }; 
   const WPointsContainer & getPoints() { return m_points; }
-  bool concat(WLine line); //TODO перейти к двум параметрам 
+  void concat(WLine line); //TODO перейти к двум параметрам 
 
   int getScaler() { return m_scaler; };
   void setScaler(int scaler);
