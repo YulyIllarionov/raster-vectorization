@@ -87,7 +87,7 @@ void WDxfWriter::end()
     dw = NULL;
 }
 
-void WDxfWriter::writePolyLine(WLine line)
+void WDxfWriter::writePolyLine(WLine line, int height)
 {
     DL_Attributes attr("mainlayer", line.getColor(), line.getWidth()*100, "BYLAYER", 1.0);
     int num_points = line.Lenght() % line.getScaler() == 0 ? (line.Lenght() / line.getScaler()): (line.Lenght() / line.getScaler() + 1);
@@ -96,9 +96,9 @@ void WDxfWriter::writePolyLine(WLine line)
     for (int i = 0;i < line.Lenght();i++)
     {
         if ((i + 1) % line.getScaler() == 0)
-            dxf.writeVertex(*dw, DL_VertexData(line.getPoint(i).x, line.getPoint(i).y, 0, 0));
+            dxf.writeVertex(*dw, DL_VertexData(line.getPoint(i).x, height -line.getPoint(i).y, 0, 0));
     }
-    dxf.writeVertex(*dw, DL_VertexData(line.getPoint(line.Lenght()-1).x, line.getPoint(line.Lenght() - 1).y, 0, 0));
+    dxf.writeVertex(*dw, DL_VertexData(line.getPoint(line.Lenght()-1).x, height - line.getPoint(line.Lenght() - 1).y, 0, 0));
     dxf.writePolylineEnd(*dw);
 }
 
