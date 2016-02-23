@@ -13,7 +13,7 @@ using namespace APP_NAMESPACE;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-  WImageRaster image("testFat.bmp");
+  WImageRaster image("test vector.bmp");
     
   bool result = WSkeletonizer::Instance().Skeletonize(image, image);
 
@@ -22,7 +22,7 @@ int _tmain(int argc, _TCHAR* argv[])
   Vectorization vectorization(&image);
 
   vectorization.onSkeleton();
-  vectorization.setScaleForAllLines(5);
+  vectorization.setScaleForAllLines(2);
   vectorization.calcLinesWidth();
 
   vectorization.linesToFile("out.dxf");
