@@ -17,6 +17,12 @@ int _tmain(int argc, _TCHAR* argv[])
     
   bool result = WSkeletonizer::Instance().Skeletonize(image, image);
 
+  Vectorization vectorization(&image);
+
+  vectorization.onSkeleton();
+
+  vectorization.linesToFile("out,dxf");
+
   image.saveAsBMP("temp2.bmp");
   return 0;
 }
