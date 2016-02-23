@@ -13,21 +13,23 @@ using namespace APP_NAMESPACE;
 
 int _tmain(int argc, char* argv[])
 {
-  std::cout << " [input name = test_vector.bmp] [output name = out]" << std::endl;
+  std::cout << " [input file is test_vector.bmp]" << std::endl;
+  std::cout << " [output file is out.dxf]" << std::endl;
+  std::cout << " please stand by ";
 
-  WImageRaster image("test_vector.bmp");
+  WImageRaster image("test vector.bmp"); //Open input raster image
     
-  bool result = WSkeletonizer::Instance().Skeletonize(image, image);
+  bool result = WSkeletonizer::Instance().Skeletonize(image, image); //Skeletonization of input image 
 
-  image.saveAsBMP("out.bmp");
+  //image.saveAsBMP("out.bmp"); //Saving result of skeletonization
 
-  Vectorization vectorization(&image);
-
+  Vectorization vectorization(&image); //Vectorization of skeletonized image
   vectorization.onSkeleton();
-  vectorization.setScaleForAllLines(5);
-  //vectorization.calcLinesWidth();
+  
+  vectorization.setScaleForAllLines(20); //Number of missed points. Accuracy is lost with increasing
+  //vectorization.calcLinesWidth();  //Ñalculation of the thickness of lines 
 
-  vectorization.linesToFile("out.dxf");
+  vectorization.linesToFile("out.dxf"); //Saving vector image in out.dxf
 
   return 0;
 }
