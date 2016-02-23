@@ -45,9 +45,9 @@ void WSkeletonizer::InitializeTemplates()
     SkeletonTemplate _template(3, 3, 1, 1);
 
     SRow row1, row2, row3;
-    row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Any); 
+    row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Y); 
     row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Background);
-    row3.push_back(Foreground); row3.push_back(Foreground); row3.push_back(Any);
+    row3.push_back(Foreground); row3.push_back(Foreground); row3.push_back(Y);
 
     _template.m_points.push_back(row1);
     _template.m_points.push_back(row2);
@@ -66,7 +66,7 @@ void WSkeletonizer::InitializeTemplates()
     SRow row1, row2, row3;
     row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Foreground);
     row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Foreground);
-    row3.push_back(Any);        row3.push_back(Background); row3.push_back(Any);
+    row3.push_back(Y);        row3.push_back(Background); row3.push_back(Y);
 
     _template.m_points.push_back(row1);
     _template.m_points.push_back(row2);
@@ -83,9 +83,9 @@ void WSkeletonizer::InitializeTemplates()
     SkeletonTemplate _template(3, 4, 1, 1);
 
     SRow row1, row2, row3;
-    row1.push_back(Any);        row1.push_back(Foreground); row1.push_back(Foreground);
+    row1.push_back(Y);          row1.push_back(Foreground); row1.push_back(Foreground);
     row2.push_back(Background); row2.push_back(C);          row2.push_back(Foreground); row2.push_back(Foreground);
-    row3.push_back(Any);        row3.push_back(Foreground); row3.push_back(Foreground);
+    row3.push_back(Y);          row3.push_back(Foreground); row3.push_back(Foreground);
 
     _template.m_points.push_back(row1);
     _template.m_points.push_back(row2);
@@ -103,7 +103,7 @@ void WSkeletonizer::InitializeTemplates()
     SkeletonTemplate _template(4, 3, 1, 1);
 
     SRow row1, row2, row3, row4;
-    row1.push_back(Any);        row1.push_back(Background); row1.push_back(Any);
+    row1.push_back(Y);          row1.push_back(Background); row1.push_back(Y);
     row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Foreground);
     row3.push_back(Foreground); row3.push_back(Foreground); row3.push_back(Foreground);
     row4.push_back(Undefined);  row4.push_back(Foreground);
@@ -317,7 +317,7 @@ void WSkeletonizer::InitializeTemplatesExt()
   // 1 c 1 x
   // 0 1 1 1
   {
-    SkeletonTemplate _template(4, 4, 1, 2);
+    SkeletonTemplate _template(4, 4, 2, 1);
 
     SRow row1, row2, row3, row4;
     row1.push_back(Foreground); row1.push_back(Any);        row1.push_back(Foreground); row1.push_back(Any);
@@ -339,7 +339,7 @@ void WSkeletonizer::InitializeTemplatesExt()
   // 1 1 x 1
   // 1 x 1 x
   {
-    SkeletonTemplate _template(4, 4, 1, 2);
+    SkeletonTemplate _template(4, 4, 1, 1);
 
     SRow row1, row2, row3, row4;
     row1.push_back(Background); row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Foreground);
@@ -384,7 +384,7 @@ void WSkeletonizer::InitializeTemplatesExt()
   // x 1 c 1
   // 1 1 1 0
   {
-    SkeletonTemplate _template(4, 4, 1, 2);
+    SkeletonTemplate _template(4, 4, 2, 2);
 
     SRow row1, row2, row3, row4;
     row1.push_back(Any);        row1.push_back(Foreground); row1.push_back(Any);        row1.push_back(Foreground);
@@ -462,26 +462,44 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
   int center_x = _template.m_center.first;
   int center_y = _template.m_center.second;
 
+  bool isYInit  = false;
+  bool isYBackground1 = false;
+  bool isYBackground2 = false;
+
   for (size_t i = 0; i < _template.m_points.size(); i++)
   {
     for (size_t j = 0; j < _template.m_points[i].size(); j++)
     {
       // is pattern could be checked
       if (coord_x - center_x + i < 0
-        || coord_x - center_x + i >= skeleton[i].size()
+        || coord_x - center_x + i >= skeleton.size()
         || coord_y - center_y + j < 0
-        || coord_y - center_y + j >= skeleton.size())
+        || coord_y - center_y + j >= skeleton[i].size())
       {
-        continue;
+        return false;
       }
 
-      if ((skeleton[coord_x - center_x + i][coord_y - center_y + j]
+      if (Y & _template.m_points[i][j] != 0)
+      {
+        if (!isYInit)
+        {
+          isYInit = true;
+          isYBackground1 = (skeleton[coord_x - center_x + i][coord_y - center_y + j] & Background) != 0;
+        }
+        else
+        {
+          isYBackground2 = (skeleton[coord_x - center_x + i][coord_y - center_y + j] & Background) != 0;
+        }
+      } else if ((skeleton[coord_x - center_x + i][coord_y - center_y + j]
         & _template.m_points[i][j]) == 0)
       {
         return false;
       }
     }
   }
+
+  if (isYInit)
+    return isYBackground1 || isYBackground2;
 
   return true;
 }
@@ -561,8 +579,6 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
     _skeleton[i].resize(raster[i].size());
   }*/
 
-  
-  
   WSkeleton next_skeleton;
   if (!InitializeSkeletonByRaster(raster, next_skeleton))
     return false;
@@ -592,11 +608,12 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
             // check if marked
             if ((curr_skeleton[i - 1][j - 1] & Marked) == 0)
             {
-              next_skeleton[i - 1][j - 1] |= Marked; // if not then mark
+              curr_skeleton[i - 1][j - 1] |= Marked; // if not then mark
             }
             else if (MatchPattern(m_templates_ext[0], curr_skeleton, i - 1, j - 1))
             {
               next_skeleton[i - 1][j - 1] = Background;
+              curr_skeleton[i - 1][j - 1] &= ~Marked;
             }
           }
           // left up corner
@@ -605,11 +622,12 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
             // check if marked
             if ((curr_skeleton[i - 1][j + 1] & Marked) == 0)
             {
-              next_skeleton[i - 1][j + 1] |= Marked; // if not then mark
+              curr_skeleton[i - 1][j + 1] |= Marked; // if not then mark
             }
             else if (MatchPattern(m_templates_ext[1], curr_skeleton, i - 1, j + 1))
             {
               next_skeleton[i - 1][j + 1] = Background;
+              curr_skeleton[i - 1][j + 1] &= ~Marked;
             }
           }
           // right up corner
@@ -618,11 +636,12 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
             // check if marked
             if ((curr_skeleton[i + 1][j + 1] & Marked) == 0)
             {
-              next_skeleton[i + 1][j + 1] |= Marked; // if not then mark
+              curr_skeleton[i + 1][j + 1] |= Marked; // if not then mark
             }
             else if (MatchPattern(m_templates_ext[2], curr_skeleton, i + 1, j + 1))
             {
               next_skeleton[i + 1][j + 1] = Background;
+              curr_skeleton[i + 1][j + 1] &= ~Marked;
             }
           }
           // right down corner
@@ -631,11 +650,12 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
             // check if marked
             if ((curr_skeleton[i + 1][j - 1] & Marked) == 0)
             {
-              next_skeleton[i + 1][j - 1] |= Marked; // if not then mark
+              curr_skeleton[i + 1][j - 1] |= Marked; // if not then mark
             }
             else if (MatchPattern(m_templates_ext[3], curr_skeleton, i + 1, j - 1))
             {
               next_skeleton[i + 1][j - 1] = Background;
+              curr_skeleton[i + 1][j - 1] &= ~Marked;
             }
           }
         }
@@ -658,7 +678,6 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
 
   return false;
 }
-
 
 
 APP_END_NAMESPACE

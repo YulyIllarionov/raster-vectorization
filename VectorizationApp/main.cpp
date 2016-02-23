@@ -13,10 +13,10 @@ using namespace APP_NAMESPACE;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    WImageRaster image("test vector.bmp");
+  WImageRaster image("test vector.bmp");
     
-    bool result = WSkeletonizer::Instance().Skeletonize(image, image);
+  bool result = WSkeletonizer::Instance().Skeletonize(image, image);
 
-    image.saveAsBMP("temp2.bmp");
-    return 0;
+  image.saveAsBMP("temp2.bmp");
+  return 0;
 }

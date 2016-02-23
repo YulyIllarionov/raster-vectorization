@@ -26,14 +26,15 @@ class WSkeletonizer
     Background = 0x1,
     Foreground = 0x2,
     Any = Background | Foreground,  // Background or foreground
-    C = 0x4,                        // Could be deleted
-    Marked = 0x8                    // Marked
+    C = 0x2,                        // Central pixel
+    Y = 0x4,                        // At least one of them should be Background
+    Marked = 0x8,                   // Marked
+
   };
 
   typedef unsigned char    SPoint;
   typedef vector<SPoint>   SRow;
   typedef vector<SRow>     WSkeleton;
-
 
   class SkeletonTemplate
   {
@@ -48,19 +49,14 @@ class WSkeletonizer
     SkeletonTemplate() {};
   };
 
-
 public:
-
-  //static WSkeletonizer* Instance();
 
   static WSkeletonizer& Instance() {
     static WSkeletonizer instance;
     return instance;
   }
 
-  //bool Skeletonize(/*const*/ WMatrix& raster, WMatrix& skeleton);
   bool Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& skeleton);
-
 
 private:
 
@@ -96,8 +92,6 @@ private:
 
   vector<SkeletonTemplate> m_templates;
   vector<SkeletonTemplate> m_templates_ext;
-
-  //static WSkeletonizer* m_instance;
 
 };
 
