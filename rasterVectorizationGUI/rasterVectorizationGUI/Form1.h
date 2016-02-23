@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VectorizationDll.h"
+//#include "VectorizationDll.h"
 
 namespace rasterVectorizationGUI {
 
@@ -223,8 +223,8 @@ namespace rasterVectorizationGUI {
     private: System::Void trackBar_ValueChanged(System::Object^  sender, System::EventArgs^  e)
              {
                  TrackBar ^ changedTrackBar = (TrackBar ^)sender;
-                 index = Array::IndexOf( linesParams, changedTrackBar);
-                 label1->Text = System::Convert::ToString(index);
+                 //index = Array::IndexOf( linesParams, changedTrackBar);
+                 label1->Text = System::Convert::ToString(changedTrackBar->Name);
                  //if (index == 2)
                      //drawPointsToVector();
              }

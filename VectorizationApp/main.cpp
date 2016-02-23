@@ -13,7 +13,7 @@ using namespace APP_NAMESPACE;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-  WImageRaster image("cross.bmp");
+  WImageRaster image("test vector.bmp");
     
   bool result = WSkeletonizer::Instance().Skeletonize(image, image);
 

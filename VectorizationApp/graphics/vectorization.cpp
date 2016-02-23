@@ -116,6 +116,10 @@ void Vectorization::onSkeleton()
                             }
                         }
                     }while(neighbors.size()>0);
+
+                    //currentLine.setColor(color);
+                    //currentLine.setScaler(1);
+                    //this->m_lines.push_back(currentLine);
                     if (i==0)
                     {
                         fullLine = currentLine;
@@ -127,7 +131,7 @@ void Vectorization::onSkeleton()
                     }
                 }
                 fullLine.setColor(color);
-                fullLine.setScaler(10);
+                fullLine.setScaler(5);
                 this->m_lines.push_back(fullLine);
             }
 		}
