@@ -479,7 +479,7 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
         return false;
       }
 
-      if (Y & _template.m_points[i][j] != 0)
+      if ((Y & _template.m_points[i][j]) != 0)
       {
         if (!isYInit)
         {
