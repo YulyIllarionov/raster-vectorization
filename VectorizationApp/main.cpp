@@ -23,7 +23,7 @@ int _tmain(int argc, char* argv[])
 
   //image.saveAsBMP("out.bmp"); //Saving result of skeletonization
 
-  Vectorization vectorization(&image_skelet, &image); //Vectorization of skeletonized image
+  WVectorization vectorization(&image_skelet, &image); //Vectorization of skeletonized image
   vectorization.onSkeleton();
   
   vectorization.setScaleForAllLines(10); //Number of missed points. Accuracy is lost with increasing
