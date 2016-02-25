@@ -3,7 +3,6 @@
 /// \brief This file contains vectorization
 /// \author Whiteteam authors
 
-#include "stdafx.h"
 #include "vectorization.h"
 
 
