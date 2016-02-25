@@ -63,13 +63,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
-      <PrecompiledHeaderFile />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -97,6 +96,8 @@
     <ClInclude Include="libs\dl_global.h" />
     <ClInclude Include="libs\dl_writer.h" />
     <ClInclude Include="libs\dl_writer_ascii.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
     <ClInclude Include="util\math_utils.h" />
     <ClInclude Include="util\utils.h" />
     <ClInclude Include="WDxfWriter.h" />
@@ -108,6 +109,10 @@
     <ClCompile Include="image_reader.cpp" />
     <ClCompile Include="libs\dl_dxf.cpp" />
     <ClCompile Include="libs\dl_writer_ascii.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="util\math_utils.cpp" />
     <ClCompile Include="util\utils.cpp" />

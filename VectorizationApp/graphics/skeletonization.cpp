@@ -3,6 +3,7 @@
 /// \brief This file contains skeletonization
 /// \author Whiteteam authors
 
+#include "stdafx.h"
 #include "skeletonization.h"
 #include "libs\dl_codes.h"
 

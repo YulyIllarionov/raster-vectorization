@@ -3,6 +3,7 @@
 /// \brief This file contains image reader
 /// \author Whiteteam authors
 
+#include "stdafx.h"
 #include "image_reader.h"
 
 APP_BEGIN_NAMESPACE

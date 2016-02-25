@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 /****************************************************************************
 ** Copyright (C) 2001-2013 RibbonSoft, GmbH. All rights reserved.
 **
