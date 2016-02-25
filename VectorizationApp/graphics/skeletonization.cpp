@@ -480,7 +480,7 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
         return false;
       }
 
-      if (Y & _template.m_points[i][j] != 0)
+      if ((Y & _template.m_points[i][j]) != 0)
       {
         isContainY = true;
         if (!isY1Init)
@@ -600,13 +600,13 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
           if (pattern_num == -1)
             continue;
 
-          if (IsConcaveCornelPixel(curr_skeleton, i, j))
-            continue;
+          //if (IsConcaveCornelPixel(curr_skeleton, i, j))
+          //  continue;
         
           next_skeleton[i][j] = Background;
           pixel_was_deleted = true;
 
-
+          /*
           // every of 4 bound pixels
           // left down corner
           if (IsCandidateConcaveCornelPixel(curr_skeleton, i - 1, j - 1, pattern_num))
@@ -663,7 +663,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
               next_skeleton[i + 1][j - 1] = Background;
               curr_skeleton[i + 1][j - 1] &= ~Marked;
             }
-          }
+          }*/
         }
       }
       
