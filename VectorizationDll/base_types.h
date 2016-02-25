@@ -30,7 +30,7 @@ public:
 	virtual ~WPoint(); 
 
 	static WPoint Empty() { return WPoint(); };
-  bool IsEmpty() { return ((x<0) && (y<0)); };
+    bool IsEmpty() { return ((x<0) && (y<0)); };
 
 	WPoint& operator=(const WPoint& other);
 	bool operator==(const WPoint& other);
@@ -67,11 +67,14 @@ public:
   WLine();
   virtual ~WLine();
 
+  WLine& operator=(WLine other);
+  void clearPoints();
+
   // line width
   void setWidth(double width);
   double getWidth() {return m_width; };
   void setColor(WColor color) { m_color = color; };
-  WColor getColor() { return m_color; };
+  WColor getColor() { return m_color; }
 
   // points
   void AddPoint(const WPoint& point) { m_points.push_back(point); };
@@ -79,8 +82,8 @@ public:
   WPoint getPoint(size_t idx) { return m_points.size() > idx ? m_points[idx] : WPoint::Empty(); };
   bool RemovePoint(size_t idx);
   int Lenght(){ return m_points.size(); }; 
-  WPointsContainer getPoints() { return m_points; }
-  bool Concat(WLine line); //TODO перейти к двум параметрам 
+  const WPointsContainer & getPoints() { return m_points; }
+  void concat(WLine line); //TODO перейти к двум параметрам 
 
   int getScaler() { return m_scaler; };
   void setScaler(int scaler);

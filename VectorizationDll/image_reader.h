@@ -21,6 +21,7 @@ class WImageRaster
 {
 public:
 	WImageRaster();
+    WImageRaster(int width, int height);
 	WImageRaster(char *filename);
 	WImageRaster(WImageRaster* imageToCopy);
 	~WImageRaster();
@@ -31,10 +32,9 @@ public:
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
 
-  int NeihborClockwise(WPoint& point);
-  int NeihborCounterClockwise(WPoint& point);
+    WPointsContainer NeihborsClockwise(WPoint point);
 
-  void saveAsBMP(char *filename);
+  void saveAsBMP(const char *filename);
 
 private:
 	WColor **image;

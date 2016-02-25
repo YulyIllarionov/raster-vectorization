@@ -27,7 +27,12 @@ WPoint& WPoint::operator=(const WPoint& other)
 {
 	this->x=other.x;
 	this->y=other.y;
-  return *this;
+    return *this;
+}
+
+void WLine::clearPoints()
+{
+    this->m_points.clear();
 }
 
 bool WPoint::operator==(const WPoint& other) //TODO возможно inline 
@@ -70,9 +75,20 @@ WLine::WLine(void) :
   m_scaler(1), m_width(-1)  
 {
 }
+
 WLine::~WLine()
 {
 
+}
+
+WLine& WLine::operator=(WLine other)
+{
+    this->m_points = other.m_points;
+    this->m_color = other.m_color;
+    this->m_width = other.m_width;
+    this->m_scaler = other.m_scaler;
+
+    return *this;
 }
 
 bool WLine::RemovePoint(size_t idx)
@@ -104,15 +120,15 @@ void WLine::setScaler(int scaler)
 }
 
 
-bool WLine::Concat(WLine line)
+void WLine::concat(WLine line)
 {
-	if (this->getPoint(0) != line.getPoint(0))
-	{
-		return false;
-	}
-    line.RemovePoint(0);
-	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
-	return true;
+    std::vector<WPoint> lineReverse;
+    for (int i=line.getPoints().size()-1; i>=0; i--)
+    {
+        lineReverse.push_back(line.getPoints().at(i));
+    }
+    //std::reverse(line.getPoints().begin(),line.getPoints().end());    
+	this->m_points.insert( this->m_points.begin(), lineReverse.begin(), lineReverse.end() );
 }
 
 APP_END_NAMESPACE

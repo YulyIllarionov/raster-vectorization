@@ -76,16 +76,16 @@ void WSkeletonizer::InitializeTemplates()
   }
 
   // #3
-  // y 1 1
+  // y 1 1 x
   // 0 c 1 1
-  // y 1 1
+  // y 1 1 x
   {
     SkeletonTemplate _template(3, 4, 1, 1);
 
     SRow row1, row2, row3;
-    row1.push_back(Y);          row1.push_back(Foreground); row1.push_back(Foreground);
+    row1.push_back(Y);          row1.push_back(Foreground); row1.push_back(Foreground); row1.push_back(Any);
     row2.push_back(Background); row2.push_back(C);          row2.push_back(Foreground); row2.push_back(Foreground);
-    row3.push_back(Y);          row3.push_back(Foreground); row3.push_back(Foreground);
+    row3.push_back(Y);          row3.push_back(Foreground); row3.push_back(Foreground); row3.push_back(Any);
 
     _template.m_points.push_back(row1);
     _template.m_points.push_back(row2);
@@ -98,7 +98,7 @@ void WSkeletonizer::InitializeTemplates()
   // y 0 y
   // 1 c 1
   // 1 1 1
-  //   1
+  // x 1 x
   {
     SkeletonTemplate _template(4, 3, 1, 1);
 
@@ -106,7 +106,7 @@ void WSkeletonizer::InitializeTemplates()
     row1.push_back(Y);          row1.push_back(Background); row1.push_back(Y);
     row2.push_back(Foreground); row2.push_back(C);          row2.push_back(Foreground);
     row3.push_back(Foreground); row3.push_back(Foreground); row3.push_back(Foreground);
-    row4.push_back(Undefined);  row4.push_back(Foreground);
+    row4.push_back(Any);        row4.push_back(Foreground); row4.push_back(Any);
 
     _template.m_points.push_back(row1);
     _template.m_points.push_back(row2);
@@ -462,9 +462,10 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
   int center_x = _template.m_center.first;
   int center_y = _template.m_center.second;
 
-  bool isYInit  = false;
-  bool isYBackground1 = false;
-  bool isYBackground2 = false;
+  bool isY1Init  = false;
+  bool isContainY = false;
+  bool isY1Background = false;
+  bool isY2Background = false;
 
   for (size_t i = 0; i < _template.m_points.size(); i++)
   {
@@ -481,14 +482,15 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
 
       if ((Y & _template.m_points[i][j]) != 0)
       {
-        if (!isYInit)
+        isContainY = true;
+        if (!isY1Init)
         {
-          isYInit = true;
-          isYBackground1 = (skeleton[coord_x - center_x + i][coord_y - center_y + j] & Background) != 0;
+          isY1Init = true;
+          isY1Background = (skeleton[coord_x - center_x + i][coord_y - center_y + j] & Background) != 0;
         }
         else
         {
-          isYBackground2 = (skeleton[coord_x - center_x + i][coord_y - center_y + j] & Background) != 0;
+          isY2Background = (skeleton[coord_x - center_x + i][coord_y - center_y + j] & Background) != 0;
         }
       } else if ((skeleton[coord_x - center_x + i][coord_y - center_y + j]
         & _template.m_points[i][j]) == 0)
@@ -498,8 +500,8 @@ bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleto
     }
   }
 
-  if (isYInit)
-    return isYBackground1 || isYBackground2;
+  if (isContainY)
+    return isY1Background || isY2Background;
 
   return true;
 }
@@ -597,10 +599,14 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
           int pattern_num = MatchPatterns(curr_skeleton, i, j);
           if (pattern_num == -1)
             continue;
+
+          //if (IsConcaveCornelPixel(curr_skeleton, i, j))
+          //  continue;
         
           next_skeleton[i][j] = Background;
           pixel_was_deleted = true;
 
+          /*
           // every of 4 bound pixels
           // left down corner
           if (IsCandidateConcaveCornelPixel(curr_skeleton, i - 1, j - 1, pattern_num))
@@ -657,7 +663,7 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
               next_skeleton[i + 1][j - 1] = Background;
               curr_skeleton[i + 1][j - 1] &= ~Marked;
             }
-          }
+          }*/
         }
       }
       

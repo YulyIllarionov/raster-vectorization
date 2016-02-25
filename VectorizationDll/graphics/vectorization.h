@@ -20,12 +20,18 @@ class Vectorization
 public:
 	Vectorization ();
 	Vectorization (WImageRaster* m_imageRaster);
+    Vectorization(WImageRaster* skeletImageRaster, WImageRaster* srcImageRaster);
 	virtual ~Vectorization(); 
 	void onSkeleton();
-    void linesToFile(char *filename);
+    void linesToFile(const char *filename);
+    void calcLinesWidth();
+    // experimental
+    void setScaleForAllLines(int scale);
 private:
+    int helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3);
 	WImageRaster* m_imageRaster;
 	WImageRaster* m_imageRasterTemp;
+    WImageRaster* m_srcImageRaster;
 	std::vector<WLine> m_lines;
 	
 };
