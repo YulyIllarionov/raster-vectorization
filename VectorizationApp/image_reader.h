@@ -21,6 +21,7 @@ class WImageRaster
 {
 public:
 	WImageRaster();
+    WImageRaster(int width, int height);
 	WImageRaster(char *filename);
 	WImageRaster(WImageRaster* imageToCopy);
 	~WImageRaster();

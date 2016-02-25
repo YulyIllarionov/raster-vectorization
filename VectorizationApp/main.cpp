@@ -18,16 +18,16 @@ int _tmain(int argc, char* argv[])
   std::cout << " please stand by ";
 
   WImageRaster image("test vector.bmp"); //Open input raster image
-    
-  bool result = WSkeletonizer::Instance().Skeletonize(image, image); //Skeletonization of input image 
+  WImageRaster image_skelet(image.getWidth(),image.getHeight());
+  bool result = WSkeletonizer::Instance().Skeletonize(image, image_skelet); //Skeletonization of input image 
 
   //image.saveAsBMP("out.bmp"); //Saving result of skeletonization
 
-  Vectorization vectorization(&image); //Vectorization of skeletonized image
+  Vectorization vectorization(&image_skelet, &image); //Vectorization of skeletonized image
   vectorization.onSkeleton();
   
-  vectorization.setScaleForAllLines(20); //Number of missed points. Accuracy is lost with increasing
-  //vectorization.calcLinesWidth();  //Ñalculation of the thickness of lines 
+  vectorization.setScaleForAllLines(10); //Number of missed points. Accuracy is lost with increasing
+  vectorization.calcLinesWidth();  //Ñalculation of the thickness of lines 
 
   vectorization.linesToFile("out.dxf"); //Saving vector image in out.dxf
 

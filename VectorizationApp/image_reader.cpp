@@ -23,6 +23,15 @@ WImageRaster::WImageRaster()
 	image = NULL;
 }
 
+WImageRaster::WImageRaster(int width, int height)
+{
+    this->width = width;
+    this->height=height;
+    image = new WColor*[height];
+    for (int i = 0; i < height; i++)
+        image[i] = new WColor[width];
+}
+
 WImageRaster::WImageRaster(char *filename)
 {
 	CImg<unsigned char> Cimage(filename);

@@ -15,14 +15,19 @@ Vectorization::~Vectorization ()
 }
 
 Vectorization::Vectorization() :
-  m_imageRaster(NULL), m_imageRasterTemp(NULL) 
+  m_imageRaster(NULL), m_imageRasterTemp(NULL), m_srcImageRaster(NULL)
 {
 }
 
 Vectorization::Vectorization(WImageRaster* image) :
-  m_imageRaster(image), m_imageRasterTemp(image)
+  m_imageRaster(image), m_imageRasterTemp(image), m_srcImageRaster(NULL)
 {
 
+}
+
+Vectorization::Vectorization(WImageRaster * skeletImageRaster, WImageRaster * srcImageRaster) :
+    m_imageRaster(skeletImageRaster), m_imageRasterTemp(skeletImageRaster), m_srcImageRaster(srcImageRaster)
+{
 }
 
 void Vectorization::onSkeleton()
@@ -151,6 +156,8 @@ void Vectorization::linesToFile(const char *filename)
 
 void Vectorization::calcLinesWidth()
 {
+    if (m_srcImageRaster == NULL) return;
+
     for (int j = 0;j < m_lines.size();j++)
     {
         int x1 = m_lines.at(j).getPoint(0).x;
@@ -204,7 +211,7 @@ int Vectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x
     int widthline = 1;
     int image_height = m_imageRaster->getHeight();
     int image_width = m_imageRaster->getWidth();
-    WColor **image = m_imageRaster->getImagePtr();
+    WColor **image = m_srcImageRaster->getImagePtr();
     int temp_y;
     int temp_x;
     if (abs(kperpend) > 1.0)
