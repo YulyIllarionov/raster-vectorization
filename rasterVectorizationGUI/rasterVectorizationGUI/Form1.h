@@ -25,7 +25,9 @@ namespace rasterVectorizationGUI {
 			//TODO: Add the constructor code here
 			//
 
-      APP_NAMESPACE::Vectorize("in_file", "out_file");
+      //APP_NAMESPACE::WColor clr;
+
+      //APP_NAMESPACE::Vectorization::Vectorize("in_file", "out_file");
 		}
 
 	protected:
