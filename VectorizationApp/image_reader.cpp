@@ -75,19 +75,18 @@ WColor ** WImageRaster::getImagePtr()
 
 int WImageRaster::getDXFColor(int red, int green, int blue) //TODO Возможна замена на WColor
 {
-    double diffColor[256];
+    double minRed = (double)red / 255 + 0.075, minGreen = (double)green / 255 + 0.075, minBlue = (double)blue / 255 + 0.075;
+    int index;
     for (int i = 0;i < 256;i++)
     {
-        diffColor[i] = abs((double)red / 255 - dxfColors[i][0]) + abs((double)green / 255 - dxfColors[i][1]) + abs((double)blue / 255 - dxfColors[i][2]);
-    }
-    int index=0;
-    double min_mean = 3.1;
-    for (int i = 0;i < 256;i++)
-    {
-        if (min_mean >= diffColor[i])
+        if (minRed >= abs((double)red / 255 - dxfColors[i][0]) &&
+            minGreen >= abs((double)green / 255 - dxfColors[i][1]) &&
+            minBlue >= abs((double)blue / 255 - dxfColors[i][2]))
         {
             index = i;
-            min_mean = diffColor[i];
+            minRed = abs((double)red / 255 - dxfColors[i][0]);
+            minGreen = abs((double)green / 255 - dxfColors[i][1]);
+            minBlue = abs((double)blue / 255 - dxfColors[i][2]);
         }
     }
     return index;
