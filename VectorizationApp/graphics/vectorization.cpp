@@ -15,14 +15,19 @@ Vectorization::~Vectorization ()
 }
 
 Vectorization::Vectorization() :
-  m_imageRaster(NULL), m_imageRasterTemp(NULL) //TODO не уверен в NULL, инициализация m_lines
+  m_imageRaster(NULL), m_imageRasterTemp(NULL), m_srcImageRaster(NULL)
 {
 }
 
 Vectorization::Vectorization(WImageRaster* image) :
-  m_imageRaster(image), m_imageRasterTemp(image)
+  m_imageRaster(image), m_imageRasterTemp(image), m_srcImageRaster(NULL)
 {
 
+}
+
+Vectorization::Vectorization(WImageRaster * skeletImageRaster, WImageRaster * srcImageRaster) :
+    m_imageRaster(skeletImageRaster), m_imageRasterTemp(skeletImageRaster), m_srcImageRaster(srcImageRaster)
+{
 }
 
 void Vectorization::onSkeleton()
@@ -116,6 +121,10 @@ void Vectorization::onSkeleton()
                             }
                         }
                     }while(neighbors.size()>0);
+
+                    //currentLine.setColor(color);
+                    //currentLine.setScaler(1);
+                    //this->m_lines.push_back(currentLine);
                     if (i==0)
                     {
                         fullLine = currentLine;
@@ -123,11 +132,11 @@ void Vectorization::onSkeleton()
                     }
                     else
                     {
-                        currentLine.concat(fullLine);
+                        fullLine.concat(currentLine);
                     }
                 }
                 fullLine.setColor(color);
-                fullLine.setScaler(10);
+                fullLine.setScaler(5);
                 this->m_lines.push_back(fullLine);
             }
 		}
@@ -147,6 +156,8 @@ void Vectorization::linesToFile(const char *filename)
 
 void Vectorization::calcLinesWidth()
 {
+    if (m_srcImageRaster == NULL) return;
+
     for (int j = 0;j < m_lines.size();j++)
     {
         int x1 = m_lines.at(j).getPoint(0).x;
@@ -179,7 +190,6 @@ void Vectorization::calcLinesWidth()
                 y1 = y2;
             }
         }
-        // здесь бы добавить еще пару строк, но это посмотрим (если не кратно scaler, то последняя точка не будет считаться)
         if(n==0) m_lines.at(j).setWidth(1);
         else m_lines.at(j).setWidth(temp_width / n);
     }
@@ -201,7 +211,7 @@ int Vectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x
     int widthline = 1;
     int image_height = m_imageRaster->getHeight();
     int image_width = m_imageRaster->getWidth();
-    WColor **image = m_imageRaster->getImagePtr();
+    WColor **image = m_srcImageRaster->getImagePtr();
     int temp_y;
     int temp_x;
     if (abs(kperpend) > 1.0)

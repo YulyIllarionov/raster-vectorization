@@ -120,15 +120,15 @@ void WLine::setScaler(int scaler)
 }
 
 
-bool WLine::concat(WLine line)
+void WLine::concat(WLine line)
 {
-	if (this->getPoint(0) != line.getPoint(0))
-	{
-		return false;
-	}
-    //line.RemovePoint(0);
-	this->m_points.insert( this->m_points.begin(), line.getPoints().begin(), line.getPoints().end() );
-	return true;
+    std::vector<WPoint> lineReverse;
+    for (int i=line.getPoints().size()-1; i>=0; i--)
+    {
+        lineReverse.push_back(line.getPoints().at(i));
+    }
+    //std::reverse(line.getPoints().begin(),line.getPoints().end());    
+	this->m_points.insert( this->m_points.begin(), lineReverse.begin(), lineReverse.end() );
 }
 
 APP_END_NAMESPACE
