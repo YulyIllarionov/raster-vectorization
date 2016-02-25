@@ -9,11 +9,11 @@ APP_BEGIN_NAMESPACE
 class WDxfWriter
 {
 public:
-    WDxfWriter(char *filename);
+    WDxfWriter(const char *filename);
     ~WDxfWriter();
     void begin();
     void end();
-    void writePolyLine(WLine line);
+    void writePolyLine(WLine line, int height);
     DL_Dxf dxf;
     DL_WriterA* dw;
 private:
