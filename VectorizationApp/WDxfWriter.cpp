@@ -89,7 +89,7 @@ void WDxfWriter::end()
 
 void WDxfWriter::writePolyLine(WLine line, int height)
 {
-    DL_Attributes attr("mainlayer", line.getColor(), line.getWidth()*100, "BYLAYER", 1.0);
+    DL_Attributes attr("mainlayer", line.getColor(), line.getWidth()*10, "BYLAYER", 1.0);
     int num_points = line.Lenght() % line.getScaler() == 0 ? (line.Lenght() / line.getScaler()+1): (line.Lenght() / line.getScaler() + 2);
     dxf.writePolyline(*dw, DL_PolylineData(num_points, 0, 0, 0), attr);
 
