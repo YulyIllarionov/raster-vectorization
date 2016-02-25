@@ -10,27 +10,27 @@
 
 APP_BEGIN_NAMESPACE
 
-Vectorization::~Vectorization ()
+WVectorization::~WVectorization ()
 {
 }
 
-Vectorization::Vectorization() :
+WVectorization::WVectorization() :
   m_imageRaster(NULL), m_imageRasterTemp(NULL), m_srcImageRaster(NULL)
 {
 }
 
-Vectorization::Vectorization(WImageRaster* image) :
+WVectorization::WVectorization(WImageRaster* image) :
   m_imageRaster(image), m_imageRasterTemp(image), m_srcImageRaster(NULL)
 {
 
 }
 
-Vectorization::Vectorization(WImageRaster * skeletImageRaster, WImageRaster * srcImageRaster) :
+WVectorization::WVectorization(WImageRaster * skeletImageRaster, WImageRaster * srcImageRaster) :
     m_imageRaster(skeletImageRaster), m_imageRasterTemp(skeletImageRaster), m_srcImageRaster(srcImageRaster)
 {
 }
 
-void Vectorization::onSkeleton()
+void WVectorization::onSkeleton()
 {
     for (int y = 0; y < m_imageRasterTemp->getHeight(); y++)
 	{
@@ -143,7 +143,7 @@ void Vectorization::onSkeleton()
 	}
 }
 
-void Vectorization::linesToFile(const char *filename)
+void WVectorization::linesToFile(const char *filename)
 {
     WDxfWriter writer(filename);
     writer.begin();
@@ -154,7 +154,7 @@ void Vectorization::linesToFile(const char *filename)
     writer.end();
 }
 
-void Vectorization::calcLinesWidth()
+void WVectorization::calcLinesWidth()
 {
     if (m_srcImageRaster == NULL) return;
 
@@ -197,7 +197,7 @@ void Vectorization::calcLinesWidth()
 
 }
 
-void Vectorization::setScaleForAllLines(int scale)
+void WVectorization::setScaleForAllLines(int scale)
 {
     for (int i = 0;i < m_lines.size();i++)
     {
@@ -205,7 +205,7 @@ void Vectorization::setScaleForAllLines(int scale)
     }
 }
 
-int Vectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3)
+int WVectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3)
 {
     int n = 0;
     int widthline = 1;

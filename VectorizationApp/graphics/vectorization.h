@@ -15,13 +15,13 @@
 
 APP_BEGIN_NAMESPACE
 
-class Vectorization
+class WVectorization
 {
 public:
-	Vectorization ();
-	Vectorization (WImageRaster* m_imageRaster);
-    Vectorization(WImageRaster* skeletImageRaster, WImageRaster* srcImageRaster);
-	virtual ~Vectorization(); 
+	WVectorization ();
+	WVectorization (WImageRaster* m_imageRaster);
+  WVectorization(WImageRaster* skeletImageRaster, WImageRaster* srcImageRaster);
+	virtual ~WVectorization(); 
 	void onSkeleton();
     void linesToFile(const char *filename);
     void calcLinesWidth();

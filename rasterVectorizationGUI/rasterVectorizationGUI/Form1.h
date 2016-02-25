@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "VectorizationDll.h"
+#include "VectorizationDll.h"
 
 namespace rasterVectorizationGUI {
 
@@ -25,9 +25,9 @@ namespace rasterVectorizationGUI {
 			//TODO: Add the constructor code here
 			//
 
-      //APP_NAMESPACE::WColor clr;
+      APP_NAMESPACE::Vectorization vectorization("in_file", "out_file");
 
-      //APP_NAMESPACE::Vectorization::Vectorize("in_file", "out_file");
+      vectorization.Vectorize(10);
 		}
 
 	protected:

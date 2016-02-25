@@ -32,7 +32,7 @@ WImageRaster::WImageRaster(int width, int height)
         image[i] = new WColor[width];
 }
 
-WImageRaster::WImageRaster(char *filename)
+WImageRaster::WImageRaster(const char *filename)
 {
 	CImg<unsigned char> Cimage(filename);
 	width = Cimage.width();

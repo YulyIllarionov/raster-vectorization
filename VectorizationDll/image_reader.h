@@ -22,7 +22,7 @@ class WImageRaster
 public:
 	WImageRaster();
     WImageRaster(int width, int height);
-	WImageRaster(char *filename);
+	WImageRaster(const char *filename);
 	WImageRaster(WImageRaster* imageToCopy);
 	~WImageRaster();
 	WColor& at(WPoint point){ return image[point.y][point.x]; }; //TODO проверка выхода за границы
