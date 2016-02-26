@@ -37,7 +37,7 @@ WSkeletonizer::WSkeletonizer()
 
 void WSkeletonizer::InitializeTemplates()
 {
-  // #1
+  // #1 - (a)
   // 1 1 y
   // 1 c 0
   // 1 1 y
@@ -56,7 +56,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #2
+  // #2 - (b)
   // 1 1 1
   // 1 c 1
   // y 0 y
@@ -75,7 +75,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #3
+  // #3 - (c)
   // y 1 1 x
   // 0 c 1 1
   // y 1 1 x
@@ -94,7 +94,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #4
+  // #4 - (d)
   // y 0 y
   // 1 c 1
   // 1 1 1
@@ -116,7 +116,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #5
+  // #5 - (e)
   // x 0 0
   // 1 c 0
   // x 1 x
@@ -135,7 +135,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #6
+  // #6 - (f)
   // x 1 1 
   // 0 c 1
   // 0 0 x
@@ -155,7 +155,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #7
+  // #7 - (g)
   // 0 1 0
   // 0 c 1
   // 0 0 0
@@ -174,7 +174,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #8
+  // #8 - (h)
   // x 1 x
   // 1 c 0
   // x 0 0
@@ -193,9 +193,9 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #9
+  // #9 - (i)
   // 0 0 x
-  // 0 x 1
+  // 0 c 1
   // x 1 1
   {
     SkeletonTemplate _template(3, 3, 1, 1);
@@ -212,7 +212,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #10
+  // #10 - (j)
   // 0 0 0
   // 0 c 1
   // 0 1 0
@@ -231,7 +231,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #11
+  // #11 - (k)
   // 0 0 0
   // 0 c 0
   // 1 1 1
@@ -250,7 +250,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #12
+  // #12 - (l)
   // 1 0 0
   // 1 c 0
   // 1 0 0
@@ -269,7 +269,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #13
+  // #13 - (m)
   // 1 1 1
   // 0 c 0
   // 0 0 0
@@ -288,7 +288,7 @@ void WSkeletonizer::InitializeTemplates()
     m_templates.push_back(_template);
   }
 
-  // #14
+  // #14 - (n)
   // 0 0 1
   // 0 c 1
   // 0 0 1
@@ -429,32 +429,9 @@ int WSkeletonizer::MatchPatterns(WSkeleton& skeleton, int coord_x, int coord_y)
   return -1;
 }
 
-//bool WSkeletonizer::IsPatternCouldBeChecked(SkeletonTemplate& _template, WSkeleton& skeleton,
-//  int coord_x, int coord_y)
-//{
-//  int center_x = _template.m_center.first;
-//  int center_y = _template.m_center.second;
-//
-//  int width = 0;
-//  int height = _template.m_points.size();
-//
-//  for (int i = 0; i < _template.m_points.size(); i++)
-//  {
-//    for (int j = 0; j < _template.m_points[i].size(); j++)
-//    {
-//      if (width < _template.m_points[i].size())
-//        width = _template.m_points[i].size();
-//    }
-//  }
-//
-//  return false;
-//}
-
 bool WSkeletonizer::MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleton,
   int coord_x, int coord_y)
 {
-  //if (IsPatternCouldBeChecked(_template, skeleton, coord_x, coord_y))
-  //  return false;
 
   if (_template.m_points.size() == 0 || skeleton.size() == 0)
     return false;
@@ -548,25 +525,109 @@ bool WSkeletonizer::IsConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int c
   return background_pixels == 1;
 }
 
-bool WSkeletonizer::IsCandidateConcaveCornelPixel(WSkeleton& skeleton, 
-  int coord_x, int coord_y, int pattern_num)
+int WSkeletonizer::ConcaveCornelPixels(WSkeleton& skeleton, int coord_x, int coord_y, 
+  int pattern_num)
 {
+  int pixels = 0x0;
+
+  // only 1 of P(8) pixel is foreground.
+  // p7 p0 p1
+  // p6 p  p2 p8
+  // p5 p4 p3
+  //    p9
+
   switch (pattern_num)
   {
+    /*Pattern(a) : 
+    If pixel p1 = 1 then p0 is a concave corner pixel
+    If pixel p3 = 1 then p4 is a concave corner pixel
+    */
     case 0:
+      if (((skeleton[coord_x + 1][coord_y + 1]) & Foreground) != 0)
+        pixels |= UP;
+      if (((skeleton[coord_x + 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= DOWN;
+      break;
+
+    /*  Pattern (b): 
+    If pixel p3 = 1 then p2 is a concave corner pixel
+    If pixel p5 = 1 then p6 is a concave corner pixel*/
     case 1:
+      if (((skeleton[coord_x + 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= RIGHT;
+      if (((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= LEFT;
+      break;
+    
+    /*  Pattern (c): 
+    If pixel p5 = 1 then p4 is a concave corner pixel
+    If pixel p7 = 1 then p2 is a concave corner pixel*/
     case 2:
+      if (((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= DOWN;
+      if (((skeleton[coord_x - 1][coord_y + 1]) & Foreground) != 0)
+        pixels |= RIGHT;
+      break;
+    
+    /*  Pattern (d): 
+    If pixel p1 = 1 then p2 is a concave corner pixel
+    If pixel p7 = 1 then p6 is a concave corner pixel*/
     case 3:
+      if (((skeleton[coord_x + 1][coord_y + 1]) & Foreground) != 0)
+        pixels |= RIGHT;
+      if (((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= LEFT;
+      break;
+    
+    /*  Pattern (e): 
+    If pixel p7 = 1 and p5 = 1 then p6 is a concave corner pixel
+    If pixel p5 = 1 and p3 = 1 then p4 is a concave corner pixel*/
     case 4:
+      if (((skeleton[coord_x - 1][coord_y + 1]) & Foreground) != 0
+        && ((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= LEFT;
+      if (((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0
+        && ((skeleton[coord_x + 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= DOWN;
+      break;
+    
+    /*  Pattern (f): 
+    If pixel p7 = 1 then p0 is a concave corner pixel
+    If pixel p5 = 1 then p2 is a concave corner pixel*/
     case 5:
-    case 6:
+      if (((skeleton[coord_x - 1][coord_y + 1]) & Foreground) != 0)
+        pixels |= UP;
+      if (((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= RIGHT;
+      break;
+    
+    /*  Pattern (h): 
+    If pixel p7 = 1 and p1 = 1 then p0 is a concave corner pixel
+    If pixel p7 = 1 and p5 = 1 then p6 is a concave corner pixel*/
+    case 7:
+      if (((skeleton[coord_x - 1][coord_y + 1]) & Foreground) != 0
+        && ((skeleton[coord_x + 1][coord_y + 1]) & Foreground) != 0)
+        pixels |= UP;
+      if (((skeleton[coord_x - 1][coord_y + 1]) & Foreground) != 0
+        && ((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= LEFT;
+      break;
+    
+    /*  Pattern (i): 
+    If pixel p1 = 1 then p2 is a concave corner pixel
+    If pixel p5 = 1 then p4 is a concave corner pixel*/
     case 8:
-      return true;
+      if (((skeleton[coord_x + 1][coord_y + 1]) & Foreground) != 0)
+        pixels |= RIGHT;
+      if (((skeleton[coord_x - 1][coord_y - 1]) & Foreground) != 0)
+        pixels |= DOWN;
+      break;
+    /**/
     default:
       break;
   }
 
-  return false;
+  return pixels;
 }
 
 
@@ -599,71 +660,72 @@ bool WSkeletonizer::Skeletonize(/*const*/ WImageRaster& raster, WImageRaster& _s
           int pattern_num = MatchPatterns(curr_skeleton, i, j);
           if (pattern_num == -1)
             continue;
-
-          //if (IsConcaveCornelPixel(curr_skeleton, i, j))
-          //  continue;
         
           next_skeleton[i][j] = Background;
           pixel_was_deleted = true;
 
-          /*
+#if 0
+          int concave_pixels = ConcaveCornelPixels(curr_skeleton, i, j, pattern_num);
+
           // every of 4 bound pixels
-          // left down corner
-          if (IsCandidateConcaveCornelPixel(curr_skeleton, i - 1, j - 1, pattern_num))
+          // left
+          if ((concave_pixels & LEFT) != 0)
           {
             // check if marked
-            if ((curr_skeleton[i - 1][j - 1] & Marked) == 0)
+            if ((curr_skeleton[i - 1][j] & Marked) == 0)
             {
-              curr_skeleton[i - 1][j - 1] |= Marked; // if not then mark
+              curr_skeleton[i - 1][j] |= Marked; // if not then mark
             }
-            else if (MatchPattern(m_templates_ext[0], curr_skeleton, i - 1, j - 1))
+            else if (true || MatchPattern(m_templates_ext[0], curr_skeleton, i - 1, j))
             {
-              next_skeleton[i - 1][j - 1] = Background;
-              curr_skeleton[i - 1][j - 1] &= ~Marked;
+              next_skeleton[i - 1][j] = Background;
+              //curr_skeleton[i - 1][j] &= ~Marked;
             }
           }
-          // left up corner
-          if (IsCandidateConcaveCornelPixel(curr_skeleton, i - 1, j + 1, pattern_num))
+          // up
+          if ((concave_pixels & UP) != 0)
           {
             // check if marked
-            if ((curr_skeleton[i - 1][j + 1] & Marked) == 0)
+            if ((curr_skeleton[i][j + 1] & Marked) == 0)
             {
-              curr_skeleton[i - 1][j + 1] |= Marked; // if not then mark
+              curr_skeleton[i][j + 1] |= Marked; // if not then mark
             }
-            else if (MatchPattern(m_templates_ext[1], curr_skeleton, i - 1, j + 1))
+            else if (true || MatchPattern(m_templates_ext[0], curr_skeleton, i, j + 1))
             {
-              next_skeleton[i - 1][j + 1] = Background;
-              curr_skeleton[i - 1][j + 1] &= ~Marked;
+              next_skeleton[i][j + 1] = Background;
+              //curr_skeleton[i][j + 1] &= ~Marked;
             }
           }
-          // right up corner
-          if (IsCandidateConcaveCornelPixel(curr_skeleton, i + 1, j + 1, pattern_num))
+          // right
+          if ((concave_pixels & RIGHT) != 0)
           {
             // check if marked
-            if ((curr_skeleton[i + 1][j + 1] & Marked) == 0)
+            if ((curr_skeleton[i + 1][j] & Marked) == 0)
             {
-              curr_skeleton[i + 1][j + 1] |= Marked; // if not then mark
+              curr_skeleton[i + 1][j] |= Marked; // if not then mark
             }
-            else if (MatchPattern(m_templates_ext[2], curr_skeleton, i + 1, j + 1))
+            else if (true || MatchPattern(m_templates_ext[0], curr_skeleton, i + 1, j))
             {
-              next_skeleton[i + 1][j + 1] = Background;
-              curr_skeleton[i + 1][j + 1] &= ~Marked;
+              next_skeleton[i + 1][j] = Background;
+              //curr_skeleton[i + 1][j] &= ~Marked;
             }
           }
-          // right down corner
-          if (IsCandidateConcaveCornelPixel(curr_skeleton, i + 1, j - 1, pattern_num))
+          // down
+          if ((concave_pixels & DOWN) != 0)
           {
             // check if marked
-            if ((curr_skeleton[i + 1][j - 1] & Marked) == 0)
+            if ((curr_skeleton[i][j - 1] & Marked) == 0)
             {
-              curr_skeleton[i + 1][j - 1] |= Marked; // if not then mark
+              curr_skeleton[i][j - 1] |= Marked; // if not then mark
             }
-            else if (MatchPattern(m_templates_ext[3], curr_skeleton, i + 1, j - 1))
+            else if (true || MatchPattern(m_templates_ext[0], curr_skeleton, i, j - 1))
             {
-              next_skeleton[i + 1][j - 1] = Background;
-              curr_skeleton[i + 1][j - 1] &= ~Marked;
+              next_skeleton[i][j - 1] = Background;
+              //curr_skeleton[i][j - 1] &= ~Marked;
             }
-          }*/
+          }
+#endif
+
         }
       }
       

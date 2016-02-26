@@ -32,6 +32,14 @@ class WSkeletonizer
 
   };
 
+  enum ConcavePixel
+  {
+    UP = 0x0,
+    DOWN = 0x1,
+    RIGHT = 0x2,
+    LEFT = 0x4
+  };
+
   typedef unsigned char    SPoint;
   typedef vector<SPoint>   SRow;
   typedef vector<SRow>     WSkeleton;
@@ -80,14 +88,11 @@ private:
   static bool MatchPattern(SkeletonTemplate& _template, WSkeleton& skeleton, 
     int coord_x, int coord_y);
 
-  // is pattern could be checked
-  //static bool IsPatternCouldBeChecked(SkeletonTemplate& _template, WSkeleton& skeleton, 
-  //  int coord_x, int coord_y);
-
-  // iû concave corner pixel
+  // is concave corner pixel
   static bool IsConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y);
-  // is candidate for concave corner pixel
-  static bool IsCandidateConcaveCornelPixel(WSkeleton& skeleton, int coord_x, int coord_y, int pattern_num);
+  // return concave corner pixels
+  static int ConcaveCornelPixels(WSkeleton& skeleton, 
+    int coord_x, int coord_y, int pattern_num);
 
 
   vector<SkeletonTemplate> m_templates;
