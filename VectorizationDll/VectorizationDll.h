@@ -7,7 +7,7 @@
 #endif
 
 #include "app\app_const.h"
-//#include "image_reader.h"
+#include "image_reader.h"
 #include <vector>
 
 
@@ -31,7 +31,8 @@ private:
   std::string m_input_filename;
   std::string m_output_filename;
 
-  void* m_src_image; // for WImageRaster*
+  //void* m_src_image; // for WImageRaster*
+  WImageRaster m_src_image;
 
 
 

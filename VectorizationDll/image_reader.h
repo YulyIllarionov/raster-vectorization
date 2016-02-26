@@ -8,31 +8,30 @@
 #pragma once
 
 
-#include "libs\CImg.h"
-#include "libs\dl_codes.h"
 #include "base_types.h"
+#include "app\app_const.h"
 
-using namespace cimg_library;
 using namespace std;
 
 APP_BEGIN_NAMESPACE
 
-class WImageRaster
+class WVECTORIZEDLL WImageRaster
 {
 public:
 	WImageRaster();
-    WImageRaster(int width, int height);
+  WImageRaster(int width, int height);
 	WImageRaster(const char *filename);
 	WImageRaster(WImageRaster* imageToCopy);
 	~WImageRaster();
-	WColor& at(WPoint point){ return image[point.y][point.x]; }; //TODO проверка выхода за границы
+	
+  WColor& at(WPoint point){ return image[point.y][point.x]; }; //TODO проверка выхода за границы
 	WColor& at(int x, int y){ return image[y][x]; };
 	WColor** getImagePtr(); //TODO убивает защиту 
 	int getWidth() { return width; };
 	int getHeight() { return height; };
 	static int getDXFColor(int red,int green,int blue);
 
-    WPointsContainer NeihborsClockwise(WPoint point);
+  WPointsContainer NeihborsClockwise(WPoint point);
 
   void saveAsBMP(const char *filename);
 

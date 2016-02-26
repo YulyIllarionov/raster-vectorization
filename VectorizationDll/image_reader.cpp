@@ -5,6 +5,10 @@
 
 #include "stdafx.h"
 #include "image_reader.h"
+#include "libs\CImg.h"
+#include "libs\dl_codes.h"
+
+using namespace cimg_library;
 
 APP_BEGIN_NAMESPACE
 

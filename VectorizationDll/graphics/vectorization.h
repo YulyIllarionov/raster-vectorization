@@ -15,7 +15,7 @@
 
 APP_BEGIN_NAMESPACE
 
-class WVectorization
+class WVECTORIZEDLL WVectorization
 {
 public:
 	WVectorization ();

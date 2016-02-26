@@ -7,6 +7,11 @@
 #define APP_CONST_H_
 #pragma once
 
+#ifdef WVECTORIZEDLL_EXPORTS
+#define WVECTORIZEDLL __declspec(dllexport) 
+#else
+#define WVECTORIZEDLL __declspec(dllimport) 
+#endif
 
 #ifndef APP_NAMESPACE
 #define APP_NAMESPACE white_app
