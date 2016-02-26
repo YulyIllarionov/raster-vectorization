@@ -7,7 +7,7 @@
 #endif
 
 #include "app\app_const.h"
-//#include "image_reader.h"
+#include "image_reader.h"
 #include <vector>
 
 
@@ -17,21 +17,23 @@ class WVECTORIZEDLL Vectorization {
 
 public:
 
-    Vectorization(std::string input_filename);
-    virtual ~Vectorization();
+  Vectorization(std::string input_filename, std::string output_filename);
+  virtual ~Vectorization();
 
-    void SaveSkeletonizedImage(std::string output_filename);
-    void SaveVectorizedImage(std::string output_filename);
-    std::vector<std::pair<std::vector<std::pair<int, int>>, int>> GetLines() { return m_lines; };
+  void SaveSkeletonizedImage();
+  void SaveVectorizedImage();
+  
+  /*WVECTORIZEDLL*/ bool Vectorize(int scale/*, std::vector<POINT>& out_points*/);
 
 private:
+  
+  
+  std::string m_input_filename;
+  std::string m_output_filename;
 
+  //void* m_src_image; // for WImageRaster*
+  WImageRaster m_src_image;
 
-    // std::string m_input_filename;
-
-    void* m_vectorization; // for WImageRaster*
-
-    std::vector<std::pair<std::vector<std::pair<int, int>>, int>> m_lines;
 
 
 };

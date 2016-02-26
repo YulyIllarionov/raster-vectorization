@@ -564,47 +564,55 @@ bool WSkeletonizer::IsCandidateConcaveCornelPixel(WSkeleton& skeleton,
     If pixel p3 = 1 then p4 is a concave corner pixel
     */
     case 0:
+      if ((skeleton[coord_x][coord_y]))
 
       break;
-      /*  Pattern (b): If pixel p3 = 1 then p2 is a concave corner
-  pixel
-  If pixel p5 = 1 then p6 is a concave corner pixel*/
+
+    /*  Pattern (b): 
+    If pixel p3 = 1 then p2 is a concave corner pixel
+    If pixel p5 = 1 then p6 is a concave corner pixel*/
     case 1:
 
       break;
-    /*  Pattern (c): If pixel p5 = 1 then p4 is a concave corner
-  pixel
-  If pixel p7 = 1 then p2 is a concave corner pixel*/
+    
+    /*  Pattern (c): 
+    If pixel p5 = 1 then p4 is a concave corner pixel
+    If pixel p7 = 1 then p2 is a concave corner pixel*/
     case 2:
 
       break;
-    /*  Pattern (d): If pixel p1 = 1 then p2 is a concave corner
-  pixel
-  If pixel p7 = 1 then p6 is a concave corner pixel*/
+    
+    /*  Pattern (d): 
+    If pixel p1 = 1 then p2 is a concave corner pixel
+    If pixel p7 = 1 then p6 is a concave corner pixel*/
     case 3:
 
       break;
-    /*  Pattern (e): If pixel p7 = 1 and p5 = 1 then p6 is a concave
-  corner pixel
-  If pixel p5 = 1 and p3 = 1 then p4 is a concave corner pixel*/
+    
+    /*  Pattern (e): 
+    If pixel p7 = 1 and p5 = 1 then p6 is a concave corner pixel
+    If pixel p5 = 1 and p3 = 1 then p4 is a concave corner pixel*/
     case 4:
 
       break;
-    /*  Pattern (f): If pixel p7 = 1 then p0 is a concave corner
-  pixel
-  If pixel p5 = 1 then p2 is a concave corner pixel*/
+    
+    /*  Pattern (f): 
+    If pixel p7 = 1 then p0 is a concave corner pixel
+    If pixel p5 = 1 then p2 is a concave corner pixel*/
     case 5:
 
       break;
-    /*  Pattern (h): If pixel p7 = 1 and p1 = 1 then p0 is a concave
-  corner pixel
-  If pixel p7 = 1 and p5 = 1 then p6 is a concave corner pixel*/
-    case 6:
+    
+    /*  Pattern (h): 
+    If pixel p7 = 1 and p1 = 1 then p0 is a concave corner pixel
+    If pixel p7 = 1 and p5 = 1 then p6 is a concave corner pixel*/
+    case 7:
 
       break;
-    /*  Pattern (i): If pixel p1 = 1 then p2 is a concave corner
-  pixel
-  If pixel p5 = 1 then p4 is a concave corner pixel*/
+    
+    /*  Pattern (i): 
+    If pixel p1 = 1 then p2 is a concave corner pixel
+    If pixel p5 = 1 then p4 is a concave corner pixel*/
     case 8:
 
       break;

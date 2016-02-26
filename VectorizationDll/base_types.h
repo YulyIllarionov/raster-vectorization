@@ -13,8 +13,8 @@
 
 APP_BEGIN_NAMESPACE
 
-class WPixel;
-class WPoint;
+class WVECTORIZEDLL WPixel;
+class WVECTORIZEDLL WPoint;
 
 typedef std::vector<WPoint>                WPointsContainer;
 typedef std::vector<std::vector<WPixel> >  WMatrix;
@@ -22,7 +22,7 @@ typedef unsigned char                      WColor;
 
 #define WCOLOR_WHITE 255
 
-class WPoint
+class WVECTORIZEDLL WPoint
 {
 public:
 	WPoint();
@@ -40,7 +40,7 @@ public:
 	int y;
 };
 
-class WPixel : public WPoint
+class WVECTORIZEDLL WPixel : public WPoint
 {
 public:
 
@@ -61,7 +61,7 @@ private:
   WColor m_color;
 };
 
-class WLine
+class WVECTORIZEDLL WLine
 {
 public:
   WLine();
