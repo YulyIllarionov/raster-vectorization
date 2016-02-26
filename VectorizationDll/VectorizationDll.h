@@ -22,7 +22,9 @@ public:
 
     void SaveSkeletonizedImage(std::string output_filename);
     void SaveVectorizedImage(std::string output_filename);
-    std::vector<std::pair<std::vector<std::pair<int, int>>, int>> GetLines() { return m_lines; };
+    std::vector<APP_NAMESPACE::WLine> GetLines() { return m_lines; };
+    //std::vector<std::pair<std::vector<std::pair<int, int>>, int>> GetLines() { return m_lines; };
+
 
 private:
 
@@ -30,7 +32,8 @@ private:
 
     void* m_vectorization; // for WImageRaster*
 
-    std::vector<std::pair<std::vector<std::pair<int, int>>, int>> m_lines;
+    std::vector<APP_NAMESPACE::WLine> m_lines;
+    //std::vector<std::pair<std::vector<std::pair<int, int>>, int>> m_lines;
 
 
 };

@@ -71,13 +71,13 @@ namespace rasterVectorizationGUI {
             this->saveButton = (gcnew System::Windows::Forms::Button());
             this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
             this->searchButton = (gcnew System::Windows::Forms::Button());
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rasterImageBox))->BeginInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->rasterImageBox))->BeginInit();
             this->SuspendLayout();
             // 
             // rasterImageBox
             // 
-            this->rasterImageBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
-                | System::Windows::Forms::AnchorStyles::Left) 
+            this->rasterImageBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+                | System::Windows::Forms::AnchorStyles::Left)
                 | System::Windows::Forms::AnchorStyles::Right));
             this->rasterImageBox->Location = System::Drawing::Point(12, 12);
             this->rasterImageBox->Name = L"rasterImageBox";
@@ -85,6 +85,7 @@ namespace rasterVectorizationGUI {
             this->rasterImageBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->rasterImageBox->TabIndex = 0;
             this->rasterImageBox->TabStop = false;
+            this->rasterImageBox->Click += gcnew System::EventHandler(this, &Form1::rasterImageBox_Click);
             // 
             // loadButton
             // 
@@ -109,7 +110,7 @@ namespace rasterVectorizationGUI {
             // 
             // openFileDialog
             // 
-            this->openFileDialog->Filter = L"BMP Files (*.bmp)|*.bmp|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Fi" 
+            this->openFileDialog->Filter = L"BMP Files (*.bmp)|*.bmp|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Fi"
                 L"les (*.jpg)|*.jpg";
             this->openFileDialog->Title = L"Load Image";
             this->openFileDialog->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &Form1::openFileDialog_FileOk);
@@ -138,7 +139,7 @@ namespace rasterVectorizationGUI {
             this->Name = L"Form1";
             this->Text = L"Form1";
             this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
-            (cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rasterImageBox))->EndInit();
+            (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->rasterImageBox))->EndInit();
             this->ResumeLayout(false);
 
         }
@@ -151,7 +152,8 @@ namespace rasterVectorizationGUI {
         Image^ rasterImageForDrawTemp;
         array<TrackBar ^> ^ linesParams;
         APP_NAMESPACE::Vectorization* f_vectorization;
-        std::vector<std::pair<std::vector<std::pair<int, int>>, int>>* f_lines;
+        std::vector<APP_NAMESPACE::WLine>* f_lines;
+        //std::vector<std::pair<std::vector<std::pair<int, int>>, int>>* f_lines;
 
     private: void drawSupportPoints(void)
     {
@@ -160,13 +162,11 @@ namespace rasterVectorizationGUI {
         Graphics^ graphics = Graphics::FromImage(rasterImageForDrawTemp);
         for (int i = 0; i < f_lines->size(); i++)
         {
-            int size = (*f_lines).at(i).first.size();
-            int scale = (int)(*f_lines).at(i).second;
-            for (int j = 0; j < size; j += scale)
+            for (int j = 0; j < (*f_lines).at(i).getPoints().size(); j += (*f_lines).at(i).getScaler())
             {
                 int radius = 4;
-                int x = (*f_lines).at(i).first.at(j).first - radius;
-                int y = (*f_lines).at(i).first.at(j).second - radius;
+                int x = (*f_lines).at(i).getPoint(j).x - radius;
+                int y = (*f_lines).at(i).getPoint(j).y - radius;
                 graphics->FillEllipse(gcnew SolidBrush(Color::Red), x, y, radius * 2, radius * 2);
             }
         }
@@ -179,8 +179,8 @@ namespace rasterVectorizationGUI {
                  {
                      if ( openFileDialog->FileName != String::Empty)
                      {
-                         f_vectorization = new APP_NAMESPACE::Vectorization(msclr::interop::marshal_as<std::string>(openFileDialog->FileName));
-                         f_lines = new std::vector<std::pair<std::vector<std::pair<int, int>>, int>>(f_vectorization->GetLines());
+                         //f_vectorization = new APP_NAMESPACE::Vectorization(msclr::interop::marshal_as<std::string>(openFileDialog->FileName));
+                         f_lines = new std::vector<APP_NAMESPACE::WLine>(f_vectorization->GetLines());
                          rasterImageForDraw = Image::FromFile( openFileDialog->FileName );
                          rasterImageBox->Image = rasterImageForDraw; //dynamic_cast<Image^>(rasterImageForDraw);
                          IntPtr ptrToFileName = Marshal::StringToHGlobalAnsi(openFileDialog->FileName);
@@ -202,7 +202,7 @@ namespace rasterVectorizationGUI {
                     linesParams[i]->Name = System::Convert::ToString(i);
 
                     linesParams[i]->Minimum = 10;
-                    linesParams[i]->Maximum = f_lines->at(i).first.size() - 1;
+                    linesParams[i]->Maximum = f_lines->size();
                     linesParams[i]->Value = linesParams[i]->Minimum;
 
                     linesParams[i]->Width = loadButton->Width;
@@ -229,9 +229,11 @@ namespace rasterVectorizationGUI {
              {
                  TrackBar ^ changedTrackBar = (TrackBar ^)sender;
                  int index = System::Convert::ToInt32(changedTrackBar->Name);
-                 f_lines->at(index).second = changedTrackBar->Value;
+                 f_lines->at(index).setScaler(changedTrackBar->Value);
                  drawSupportPoints();
              }
+private: System::Void rasterImageBox_Click(System::Object^  sender, System::EventArgs^  e) {
+}
 };
 }
 
