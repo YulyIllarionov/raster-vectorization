@@ -1,6 +1,8 @@
 #pragma once
 
 #include "VectorizationDll.h"
+#include <msclr\marshal_cppstd.h>
+#include "base_types.h"
 
 namespace rasterVectorizationGUI {
 
@@ -24,10 +26,6 @@ namespace rasterVectorizationGUI {
 			//
 			//TODO: Add the constructor code here
 			//
-
-      APP_NAMESPACE::Vectorization vectorization("in_file", "out_file");
-
-      vectorization.Vectorize(10);
 		}
 
 	protected:
@@ -50,7 +48,7 @@ namespace rasterVectorizationGUI {
     private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
 
     private: System::Windows::Forms::Button^  searchButton;
-    private: System::Windows::Forms::Label^  label1;
+
 
     private: System::ComponentModel::IContainer^  components;
 
@@ -73,7 +71,6 @@ namespace rasterVectorizationGUI {
             this->saveButton = (gcnew System::Windows::Forms::Button());
             this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
             this->searchButton = (gcnew System::Windows::Forms::Button());
-            this->label1 = (gcnew System::Windows::Forms::Label());
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rasterImageBox))->BeginInit();
             this->SuspendLayout();
             // 
@@ -84,7 +81,7 @@ namespace rasterVectorizationGUI {
                 | System::Windows::Forms::AnchorStyles::Right));
             this->rasterImageBox->Location = System::Drawing::Point(12, 12);
             this->rasterImageBox->Name = L"rasterImageBox";
-            this->rasterImageBox->Size = System::Drawing::Size(337, 316);
+            this->rasterImageBox->Size = System::Drawing::Size(410, 312);
             this->rasterImageBox->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
             this->rasterImageBox->TabIndex = 0;
             this->rasterImageBox->TabStop = false;
@@ -112,9 +109,8 @@ namespace rasterVectorizationGUI {
             // 
             // openFileDialog
             // 
-            this->openFileDialog->FileName = L"openFileDialog";
-            this->openFileDialog->Filter = L"JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|BMP Fi" 
-                L"les (*.bmp)|*.bmp;";
+            this->openFileDialog->Filter = L"BMP Files (*.bmp)|*.bmp|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Fi" 
+                L"les (*.jpg)|*.jpg";
             this->openFileDialog->Title = L"Load Image";
             this->openFileDialog->FileOk += gcnew System::ComponentModel::CancelEventHandler(this, &Form1::openFileDialog_FileOk);
             // 
@@ -129,22 +125,11 @@ namespace rasterVectorizationGUI {
             this->searchButton->UseVisualStyleBackColor = true;
             this->searchButton->Click += gcnew System::EventHandler(this, &Form1::searchButton_Click);
             // 
-            // label1
-            // 
-            this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-            this->label1->AutoSize = true;
-            this->label1->Location = System::Drawing::Point(381, 306);
-            this->label1->Name = L"label1";
-            this->label1->Size = System::Drawing::Size(35, 13);
-            this->label1->TabIndex = 4;
-            this->label1->Text = L"label1";
-            // 
             // Form1
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
             this->ClientSize = System::Drawing::Size(560, 336);
-            this->Controls->Add(this->label1);
             this->Controls->Add(this->searchButton);
             this->Controls->Add(this->saveButton);
             this->Controls->Add(this->loadButton);
@@ -155,7 +140,6 @@ namespace rasterVectorizationGUI {
             this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
             (cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rasterImageBox))->EndInit();
             this->ResumeLayout(false);
-            this->PerformLayout();
 
         }
 #pragma endregion
@@ -166,17 +150,28 @@ namespace rasterVectorizationGUI {
         Image^ rasterImageForDraw;
         Image^ rasterImageForDrawTemp;
         array<TrackBar ^> ^ linesParams;
-        //WImageRaster* rasterImageForVector;
-        int size;
-        int index;
+        APP_NAMESPACE::Vectorization* f_vectorization;
+        std::vector<std::pair<std::vector<std::pair<int, int>>, int>>* f_lines;
 
-    private: void drawPointsToVector(void)
-             {
-                 rasterImageForDrawTemp = (Image^)rasterImageForDraw->Clone();
-                 Graphics^ graphics = Graphics::FromImage(rasterImageForDrawTemp);
-                 graphics->FillEllipse(gcnew SolidBrush(Color::Red), 50, 50, 20, 20);
-                 rasterImageBox->Image = rasterImageForDrawTemp;
-             }
+    private: void drawSupportPoints(void)
+    {
+        delete rasterImageForDrawTemp; //just in case
+        rasterImageForDrawTemp = (Image^)rasterImageForDraw->Clone();
+        Graphics^ graphics = Graphics::FromImage(rasterImageForDrawTemp);
+        for (int i = 0; i < f_lines->size(); i++)
+        {
+            int size = (*f_lines).at(i).first.size();
+            int scale = (int)(*f_lines).at(i).second;
+            for (int j = 0; j < size; j += scale)
+            {
+                int radius = 4;
+                int x = (*f_lines).at(i).first.at(j).first - radius;
+                int y = (*f_lines).at(i).first.at(j).second - radius;
+                graphics->FillEllipse(gcnew SolidBrush(Color::Red), x, y, radius * 2, radius * 2);
+            }
+        }
+        rasterImageBox->Image = rasterImageForDrawTemp;
+    }
 
     private: System::Void loadButton_Click(System::Object^  sender, System::EventArgs^  e) 
              {
@@ -184,6 +179,8 @@ namespace rasterVectorizationGUI {
                  {
                      if ( openFileDialog->FileName != String::Empty)
                      {
+                         f_vectorization = new APP_NAMESPACE::Vectorization(msclr::interop::marshal_as<std::string>(openFileDialog->FileName));
+                         f_lines = new std::vector<std::pair<std::vector<std::pair<int, int>>, int>>(f_vectorization->GetLines());
                          rasterImageForDraw = Image::FromFile( openFileDialog->FileName );
                          rasterImageBox->Image = rasterImageForDraw; //dynamic_cast<Image^>(rasterImageForDraw);
                          IntPtr ptrToFileName = Marshal::StringToHGlobalAnsi(openFileDialog->FileName);
@@ -195,40 +192,45 @@ namespace rasterVectorizationGUI {
              }
     private: System::Void searchButton_Click(System::Object^  sender, System::EventArgs^  e) 
             {
-                size++;
-                linesParams = gcnew array< TrackBar^ >(size);
-                for (int i=0; i<size; i++)
+                delete linesParams; //just in case
+                linesParams = gcnew array< TrackBar^ >(f_lines->size());
+                for (int i = 0; i<f_lines->size(); i++)
                 {
                     linesParams[i] = gcnew TrackBar();
-                    linesParams[i]->Name = System::Convert::ToString(i);
-                    //linesParams[i] = 
                     linesParams[i]->ValueChanged += gcnew System::EventHandler(this, &Form1::trackBar_ValueChanged);
-                    
+
+                    linesParams[i]->Name = System::Convert::ToString(i);
+
+                    linesParams[i]->Minimum = 10;
+                    linesParams[i]->Maximum = f_lines->at(i).first.size() - 1;
+                    linesParams[i]->Value = linesParams[i]->Minimum;
+
                     linesParams[i]->Width = loadButton->Width;
                     linesParams[i]->Height = loadButton->Height;
                     linesParams[i]->Left = loadButton->Left;
-                    linesParams[i]->Top = rasterImageBox->Top+i*2*loadButton->Height;
+                    linesParams[i]->Top = rasterImageBox->Top + i * 2 * loadButton->Height;
                     linesParams[i]->Width = loadButton->Width;
                     linesParams[i]->Height = loadButton->Height;
                     linesParams[i]->Anchor = static_cast<AnchorStyles>(AnchorStyles::Top | AnchorStyles::Right);
                     this->Controls->Add(linesParams[i]);
                 }
-
+                int height = loadButton->Height * 2 * (f_lines->size() + 3);
+                if (this->Height < height)
+                    this->Height = height;
+                drawSupportPoints();
             }
     private: System::Void trackBar1_Scroll(System::Object^  sender, System::EventArgs^  e) 
              {
              }
     private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
              {
-                 size = 0;
              }
     private: System::Void trackBar_ValueChanged(System::Object^  sender, System::EventArgs^  e)
              {
                  TrackBar ^ changedTrackBar = (TrackBar ^)sender;
-                 //index = Array::IndexOf( linesParams, changedTrackBar);
-                 label1->Text = System::Convert::ToString(changedTrackBar->Name);
-                 //if (index == 2)
-                     //drawPointsToVector();
+                 int index = System::Convert::ToInt32(changedTrackBar->Name);
+                 f_lines->at(index).second = changedTrackBar->Value;
+                 drawSupportPoints();
              }
 };
 }

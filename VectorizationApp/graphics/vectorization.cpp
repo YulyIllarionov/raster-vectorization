@@ -298,7 +298,7 @@ std::vector<std::pair<std::vector<std::pair<int, int>>, int>> WVectorization::ge
         }
         std::pair < std::vector<std::pair<int, int>>, int> line;
         line.first = points;
-        line.second = m_lines.at(i).getScaler;
+        line.second = m_lines.at(i).getScaler();
         lines.push_back(line);
     }
     return lines;

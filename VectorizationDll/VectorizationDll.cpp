@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include <stdexcept>
 
+#include "image_reader.h"
 #include "graphics\skeletonization.h"
 #include "graphics\vectorization.h"
 
@@ -10,48 +11,34 @@
 
 APP_BEGIN_NAMESPACE
 
-Vectorization::Vectorization(std::string input_filename, std::string output_filename)
-  : m_input_filename(input_filename), m_output_filename(output_filename),
-  m_src_image(WImageRaster(m_input_filename.c_str()))
+Vectorization::Vectorization(std::string input_filename)
+//: m_input_filename(input_filename)
+//m_src_image(WImageRaster(m_input_filename.c_str()))
 {
+    WImageRaster image(input_filename.c_str()); //Open input raster image
+    WImageRaster image_skelet(image.getWidth(), image.getHeight());
+    bool result = WSkeletonizer::Instance().Skeletonize(image, image_skelet); //Skeletonization of input image 
+    m_vectorization = new WVectorization(&image_skelet, &image); //Vectorization of skeletonized image
+    ((WVectorization*)m_vectorization)->onSkeleton();
+    ((WVectorization*)m_vectorization)->calcLinesWidth();  //Ñalculation of the thickness of lines 
+    ((WVectorization*)m_vectorization)->setScaleForAllLines(10);
+    m_lines = ((WVectorization*)m_vectorization)->getLines();
 }
 
 Vectorization::~Vectorization()
 {
-  //delete m_src_image;
-  //m_src_image = nullptr;
+    delete m_vectorization;
+    m_vectorization = nullptr;
 }
 
-/*WVECTORIZEDLL*/ bool Vectorization::Vectorize(int scale/*, std::vector<POINT>& out_points*/)
+void Vectorization::SaveSkeletonizedImage(std::string output_filename)
 {
-
-  //WImageRaster* src_image = reinterpret_cast<WImageRaster*>(m_src_image);
-
-  WImageRaster image_skelet(m_src_image.getWidth(), m_src_image.getHeight());
-  //Skeletonization of input image 
-  bool result = WSkeletonizer::Instance().Skeletonize(m_src_image, image_skelet); 
-
-  //Vectorization of skeletonized image
-  WVectorization vectorization(&image_skelet, &m_src_image); 
-  vectorization.onSkeleton();
-
-  vectorization.setScaleForAllLines(scale); //Number of missed points. Accuracy is lost with increasing
-  vectorization.calcLinesWidth();  //Ñalculation of the thickness of lines 
-
-  
-  
-
-  return true;
+    // save
 }
 
-void Vectorization::SaveSkeletonizedImage()
+void Vectorization::SaveVectorizedImage(std::string output_filename)
 {
-  // save
-}
-
-void Vectorization::SaveVectorizedImage()
-{
-  //vectorization.linesToFile("out.dxf"); //Saving vector image in out.dxf*/
+    ((WVectorization*)m_vectorization)->linesToFile(output_filename.c_str()); //Saving vector image in out.dxf*/
 }
 
 APP_END_NAMESPACE
