@@ -28,7 +28,8 @@ public:
   // experimental
   void setScaleForAllLines(int scale);
   bool setScaleForLine(int scale, int number);
-  std::vector<std::pair<std::vector<std::pair<int, int>>, int>> getLines();
+  //std::vector<std::pair<std::vector<std::pair<int, int>>, int>> getLines();
+  std::vector<WLine> getLines() { return m_lines; };
 
 private:
   int helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3);

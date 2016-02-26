@@ -17,6 +17,12 @@ WPoint::WPoint(void) :
 {
 }
 
+WPoint::WPoint(WPoint& point)
+{
+    this->x = point.x;
+    this->y = point.y;
+}
+
 WPoint::WPoint(int x_, int y_)
 {
 	x = x_;
@@ -76,10 +82,20 @@ WLine::WLine(void) :
 {
 }
 
+WLine::WLine(WLine& line)
+{
+    this->m_color = line.m_color;
+    this->m_scaler = line.m_scaler;
+    this->m_width = line.m_width;
+    this->m_points = line.m_points;
+}
+
 WLine::~WLine()
 {
 
 }
+
+
 
 WLine& WLine::operator=(WLine other)
 {

@@ -26,6 +26,7 @@ class WVECTORIZEDLL WPoint
 {
 public:
 	WPoint();
+    WPoint(WPoint& point);
 	WPoint(int x_, int y_);
 	virtual ~WPoint(); 
 
@@ -65,6 +66,7 @@ class WVECTORIZEDLL WLine
 {
 public:
   WLine();
+  WLine(WLine& line);
   virtual ~WLine();
 
   WLine& operator=(WLine other);
