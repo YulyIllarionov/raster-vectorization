@@ -205,6 +205,13 @@ void WVectorization::setScaleForAllLines(int scale)
     }
 }
 
+bool WVectorization::setScaleForLine(int scale, int number)
+{
+    if (number > m_lines.size() - 1)
+        return false;
+    m_lines.at(number).setScaler(scale);
+}
+
 int WVectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int x3, int y3)
 {
     int n = 0;
@@ -274,6 +281,27 @@ int WVectorization::helpForCalcLinesWidth(double kperpend, double bperpend, int 
 
     return widthline;
 
+}
+
+std::vector<std::pair<std::vector<std::pair<int, int>>, int>> WVectorization::getLines()
+{
+    std::vector<std::pair<std::vector<std::pair<int, int>>, int>> lines;
+    for (int i = 0; i < m_lines.size(); i++)
+    {
+        std::vector<std::pair<int, int>> points;
+        for (int j = 0; j < m_lines.at(i).getPoints().size(); j++)
+        {
+            std::pair<int, int> point;
+            point.first = m_lines.at(i).getPoints().at(j).x;
+            point.second = m_lines.at(i).getPoints().at(j).y;
+            points.push_back(point);
+        }
+        std::pair < std::vector<std::pair<int, int>>, int> line;
+        line.first = points;
+        line.second = m_lines.at(i).getScaler;
+        lines.push_back(line);
+    }
+    return lines;
 }
 
 APP_END_NAMESPACE
